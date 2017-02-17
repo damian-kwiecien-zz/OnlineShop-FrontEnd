@@ -1,0 +1,77 @@
+<!-- Modal -->
+<div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" 
+   data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+
+    <div class="form">
+      <div><button [disabled]="loading" type="button" class="close-account-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+      <ul class="tab-group">
+        <li class="tab" (click)="showRegister($event)"><a class="register">Sign Up</a></li>
+        <li class="tab active" (click)="showLogin($event)"><a class="login">Log In</a></li>
+      </ul>
+
+      <!-- tab-content -->
+      <div class="tab-content">
+        <!-- REGISTER -->
+        <div *ngIf="registerShown" class="register-form">
+          <h1>Sign Up for Free</h1>
+          <form (ngSubmit)="register()" #registerForm="ngForm" novalidate>
+
+            <div class="field-wrap">
+              <label for="registerEmail">Email Address<span class="req">*</span></label>
+              <input id="registerEmail" (keyup)="onKeyup($event)" [(ngModel)]="registerModel.Email" name="registerEmail" #registerEmail="ngModel"
+                type="email" autocomplete="off" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required />
+              <small [hidden]="registerEmail.valid || (registerEmail.pristine && !registerForm.submitted)" class="text-danger">
+                Email is required and format should be <i>john@doe.com</i>.
+              </small>
+            </div>
+
+            <div class="field-wrap">
+              <label for="registerPassword">Set A Password<span class="req">*</span></label>
+              <input id="registerPassword" (keyup)="onKeyup($event)" [(ngModel)]="registerModel.Password" name="registerPassword" #registerPassword="ngModel"
+                type="password" required autocomplete="off" validateEqual="confirmPassword" reverse="true" minlength="6" required />
+              <small [hidden]="registerPassword.valid || (registerPassword.pristine && !registerForm.submitted)" class="text-danger">
+                Password is required and minimum 6 length
+              </small>
+            </div>
+
+            <div class="field-wrap">
+              <label for="registerConfirmPassword">Confirm Password<span class="req">*</span></label>
+              <input id="registerConfirmPassword" (keyup)="onKeyup($event)" [(ngModel)]="registerModel.ConfirmPassword" name="registerConfirmPassword"
+                #registerConfirmPassword="ngModel" type="password" autocomplete="off" validateEqual="registerPassword" reverse="false"
+                required/>
+              <small [hidden]="registerConfirmPassword.valid || (registerConfirmPassword.pristine && !registerForm.submitted)" class="text-danger">
+                Password mismatch
+              </small>
+            </div>
+            <button [disabled]="!registerForm.form.valid" type="submit" class="button button-block">Get Started</button>
+            <small [hidden]="registerForm.form.valid" class="text-danger">
+                Button disabled, check imput data
+              </small>
+          </form>
+        </div>
+
+        <!-- lOGIN -->
+        <div *ngIf="loginShown" class="login-form">
+          <h1>Welcome Back!</h1>
+          <form (ngSubmit)="login()" #loginForm="ngForm" novalidate>
+
+            <div class="field-wrap">
+              <label for="loginEmail">Email Address<span class="req">*</span></label>
+              <input id="loginEmail" (keyup)="onKeyup($event)" [(ngModel)]="loginModel.Email" name="loginEmail" #loginEmail="ngModel" type="email" autocomplete="off" required />
+            </div>
+
+            <div class="field-wrap">
+              <label for="loginPassword">Password<span class="req">*</span></label>
+              <input id="loginPassword" (keyup)="onKeyup($event)" [(ngModel)]="loginModel.Password" name="loginPassword" #loginPassword="ngModel" type="password" autocomplete="off" required />
+            </div>
+            <p class="forgot"><a href="#">Forgot Password?</a></p>
+            <button type="submit" class="button button-block">Log In</button>
+          </form>
+        </div>
+      </div>
+      <!-- !tab-content -->
+    </div>
+
+  </div>
+</div>

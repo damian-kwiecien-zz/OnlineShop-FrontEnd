@@ -1,0 +1,230 @@
+        <!-- Only one element can be shown at the time -->
+        <!-- He -->
+        <div *ngIf="heSelected">
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-male"></i>For Him</h4>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="fa fa-male"></i>Clothes</a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  <table class="table">
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/he/clothes/hats">Hats</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/he/clothes/jackets">Jackets</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/he/clothes/shirts">Shirts</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/he/clothes/tshirts">T-shirts</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/he/clothes/trousers">Trousers</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/he/clothes/shoes">Shoes</a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><i class="fa fa-male"></i>Accesories</a>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <table class="table">
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-android-watch"></i><a href="/he/accesories/sunglasses">Sunglasses</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-android-watch"></i><a href="/he/accesories/wallets">Wallets</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-android-watch"></i><a href="/he/accesories/belts">Belts</a>
+                      </td>
+                    </tr>
+                    
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- She -->
+        <div *ngIf="sheSelected">
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-female"></i>For Her</h4>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="fa fa-female"></i>Clothes</a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  <table class="table">
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/she/clothes/hats">Hats</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/she/clothes/jackets">Jackets</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/she/clothes/shirts">Shirts</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/she/clothes/tshirts">T-shirts</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/she/clothes/trousers">Trousers</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/she/clothes/shoes">Shoes</a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><i class="fa fa-female"></i>Accesories</a>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <table class="table">
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-android-watch"></i><a href="/she/accesories/bags">Bags</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-android-watch"></i><a href="/she/accesories/sunglasses">Sunglasses</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-android-watch"></i><a href="/she/accesories/jewellery">Jewellery</a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Kids -->
+        <div *ngIf="kidsSelected">
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-child"></i>For Kids</h4>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="fa fa-child"></i>Boys</a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  <table class="table">
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/kids/boys/tshirts">T-shirts</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/kids/boys/trousers">Trousers</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/kids/boys/shoes">Shoes</a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><i class="fa fa-child"></i>Girls</a>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <table class="table">
+                    <tr>
+                      <td>
+                       <i class="ionicons ion-tshirt-outline"></i><a href="/kids/girls/tshirts">T-shirts</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/kids/girls/trousers">Trousers</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <i class="ionicons ion-tshirt-outline"></i><a href="/kids/girls/shoes">Shoes</a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

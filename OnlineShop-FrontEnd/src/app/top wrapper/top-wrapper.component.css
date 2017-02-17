@@ -1,0 +1,158 @@
+    .top-background {
+    position: relative;
+    width: 100%;    
+    height: 80%;
+  }
+  
+    .top-content {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    margin-top: 50px;
+  }
+  
+  .carousel,
+  .carousel-inner {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+  }
+  
+  .item {
+    width: 100%;
+    height: 100%;
+    background-position: center center;
+    background-size: cover;
+    z-index: 0;
+  }
+  
+  .navbar-right {
+    background-image: url("/assets/images/shoppingCart.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: table;
+    background: black;
+    margin: 0;
+    height: 100px;
+  }
+
+    .navbar-header {
+    background-image: url("/assets/images/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: table;
+    height: 100px;
+  }
+  
+  .shopping-cart {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    color: rgba(255, 255, 255, 1);
+    font-weight: bolder;
+  }
+  .shopping-cart > i {
+      font-size: xx-large;
+      width: 100%;
+  }
+
+  .navbar-brand {
+    font-size: 130%;
+    padding-top: 20%;
+    padding-left: 30%;
+    color: rgba(255,255,255,0.8);
+  }
+
+/* Experimental styles */
+
+    #lowerNavbar {
+    font-size: x-large;
+      font-weight: bolder;
+      border-top: ivory;
+    border-top-width: 2px;
+      border-bottom-width: 0;
+      border-left-width: 0;
+      border-right-width: 0;
+      border-style: solid;
+    }
+
+    #upperNavbar > .navbar-nav > li > a {
+        color: rgba(255, 255, 255, 1);
+      text-transform: uppercase;
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    
+     }
+    
+
+     #upperNavbar > .navbar-nav > li > a:focus,
+    #upperNavbar > .navbar-nav > li > a:hover {
+        background: black;
+        color: rgba(255, 255, 255, 1);
+     }
+
+    #lowerNavbar > .navbar-nav > li > a {
+        color: rgba(255, 255, 255, 1);
+      text-transform: uppercase;
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        background: maroon;
+     }
+
+     #lowerNavbar > .navbar-nav > li > a:focus,
+     #lowerNavbar > .navbar-nav > li > a:hover {
+         color: darkgray;
+     }
+
+    nav {
+      background: rgba(0, 0, 0, 0.7);
+      border-color: ivory;
+      border-width: 1px;
+      border-style: solid;
+    }
+
+
+ 
+/* Below search field css ONLY */
+#custom-search-input {
+        margin:0;
+        margin-top: 10px;
+        padding: 0;
+        margin-left: 5px;
+        width: 350px;
+    }
+ 
+    #custom-search-input .search-query {
+        padding-right: 3px;
+        padding-right: 4px \9;
+        padding-left: 3px;
+        padding-left: 4px \9;
+        /* IE7-8 doesn't have border-radius, so don't indent the padding */
+ 
+        margin-bottom: 0;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+ 
+    #custom-search-input button {
+        border: 0;
+        background: none;
+        /** belows styles are working good */
+        padding: 2px 5px;
+        margin-top: 2px;
+        position: relative;
+        left: -28px;
+        /* IE7-8 doesn't have border-radius, so don't indent the padding */
+        margin-bottom: 0;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        color:#D9230F;
+    }
+ 
+    .search-query:focus + button {
+        z-index: 3;   
+    }
