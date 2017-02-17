@@ -1,0 +1,130 @@
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+  }
+  
+  /*
+  .background-top {
+    position: relative;
+    width: 100%;
+    height: 60%;
+  }
+  
+  .background-middle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: lightgray;
+  }
+  
+  .background-bottom {
+    position: relative;
+    width: 100%;
+    height: 60%;
+    background-image: url("https://unsplash.it/4835/3223?image=1076");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  
+  .content-top {
+    position: absolute;
+  }
+  
+  .content-top {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    margin-top: 50px;
+  }
+  
+  .content-middle {
+    position: absolute;
+  }
+  
+  .content-bottom {
+    position: absolute;
+    width: 40%;
+    left: 30%;
+    right: 30%;
+    top: 60%;
+  }
+  
+  .carousel,
+  .carousel-inner {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+  }
+  
+  .item {
+    width: 100%;
+    height: 100%;
+    background-position: center center;
+    background-size: cover;
+    z-index: 0;
+  }
+  
+  .navbar-right {
+    background-image: url("./shoppingCart.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: table;
+  }
+
+    .navbar-header {
+    background-image: url("./logo.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: table;
+  }
+  
+  .shopping-cart {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    font-size: xx-large;
+  }
+  */
+
+  
+  /*
+html,body {
+    height:100%;
+  width:100%;
+  position:relative;
+}
+#background-carousel{
+  position:fixed;
+  width:100%;
+  height:80%;
+  z-index:-1;
+}
+.carousel,
+.carousel-inner {
+  width:100%;
+  height:100%;
+  z-index:0;
+  overflow:hidden;
+}
+.item {
+  width:100%;
+  height:100%;
+  background-position:center center;
+  background-size:cover;
+  z-index:0;
+}
+
+#content-wrapper {
+  position:absolute;
+  z-index:1 !important;
+  min-width:100%;
+  min-height:100%;
+}
+
+*/
