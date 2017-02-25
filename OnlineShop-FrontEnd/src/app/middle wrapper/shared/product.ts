@@ -1,10 +1,6 @@
-enum Target {
-        He,
-        She,
-        Kids
-}
+import { ProductImages } from './product-images';
 
-export class Product { 
+export class Product {
         Id: number;
 
         Name: string;
@@ -17,11 +13,12 @@ export class Product {
 
         ImgUrl: string;
 
-        Target: Target;
+        Target: string;
 
         Category: string;
 
         Type: string;
 
-        
+        ProductImages: ProductImages[];
 }
+

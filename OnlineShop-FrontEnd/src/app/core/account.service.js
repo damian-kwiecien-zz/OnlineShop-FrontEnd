@@ -10,35 +10,54 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-require('rxjs/add/operator/map');
+var Observable_1 = require('rxjs/Observable');
 var angular2_jwt_1 = require('angular2-jwt/angular2-jwt');
-var login_binding_model_1 = require('../shared/login-binding-model');
+require('rxjs/add/operator/map');
+var app_settings_1 = require('../app.settings');
 var AccountService = (function () {
     function AccountService(http, authHttp) {
         this.http = http;
         this.authHttp = authHttp;
         this.SECOND_IN_DAYS = 0.0000115741;
+        this.EMPTY_TOKEN = {
+            access_token: '',
+            token_type: 'bearer',
+            expires_in: 0,
+            userName: '',
+            ".issued": '0',
+            ".expires": '0'
+        };
     }
-    AccountService.prototype.loged = function () {
-        if (this.tokenExpired())
-            return false;
-        else
-            return true;
+    AccountService.prototype.register = function (model) {
+        return this.http.post(app_settings_1.AppSettings.API_ENDPOINT + '/api/account/register', model)
+            .catch(this.handleError);
     };
-    AccountService.prototype.setToken = function (token) {
-        localStorage.setItem('token', JSON.stringify(token));
+    AccountService.prototype.login = function (model) {
+        var _this = this;
+        var body = 'username=' + model.Email + '&password=' + model.Password + '&grant_type=password';
+        return this.http.post(app_settings_1.AppSettings.API_ENDPOINT + '/token', body, new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }))
+            .map(function (response) {
+            var token = response.json();
+            if (token)
+                _this.setToken(token);
+        }).catch(this.handleError);
+    };
+    AccountService.prototype.logout = function () {
+        this.setToken(this.EMPTY_TOKEN);
     };
     AccountService.prototype.getToken = function () {
-        return JSON.parse(localStorage.getItem('token'));
+        return JSON.parse(localStorage.getItem('token')) || this.EMPTY_TOKEN;
     };
     AccountService.prototype.tokenExpired = function () {
-        if (this.getToken().expires_in == 0)
+        var stringDate = this.getToken()[".expires"];
+        var date = new Date(stringDate);
+        if (new Date(Date.now()) > date)
             return true;
         else
             return false;
     };
-    AccountService.prototype.tokenExist = function () {
-        if (this.isEmpty(this.getToken))
+    AccountService.prototype.isAuthenticated = function () {
+        if (this.tokenExpired())
             return false;
         else
             return true;
@@ -46,42 +65,18 @@ var AccountService = (function () {
     AccountService.prototype.expirationInDays = function () {
         return this.getToken().expires_in * this.SECOND_IN_DAYS;
     };
-    AccountService.prototype.isEmpty = function (obj) {
-        for (var x in obj) {
-            if (obj.hasOwnProperty(x))
-                return false;
-        }
-        return true;
+    AccountService.prototype.tokenExist = function () {
+        if (this.getToken().access_token == '')
+            return false;
+        else
+            return true;
     };
-    AccountService.prototype.register = function (model) {
-        return this.http.post('http://localhost:54254/api/account/register', model)
-            .map(function (response) { return response.json(); });
+    AccountService.prototype.setToken = function (token) {
+        localStorage.setItem('token', JSON.stringify(token));
     };
-    AccountService.prototype.login = function (model) {
-        var body = 'username=' + model.Email + '&password=' + model.Password + '&grant_type=password';
-        return this.http.post('http://localhost:54254/token', body, new http_1.Headers({ 'Content-Type': 'application/x-www-form-urlencoded' }))
-            .map(function (response) {
-            var token = response.json();
-            if (token)
-                localStorage.setItem('token', JSON.stringify(token));
-        });
-    };
-    AccountService.prototype.logout = function () {
-        localStorage.removeItem('token');
-    };
-    AccountService.prototype.loginIn = function () {
-        var o = new login_binding_model_1.LoginBindingModel();
-        o.Email = 'ja@ja.com';
-        o.Password = 'Password1`';
-        this.login(o).subscribe();
-        ;
-    };
-    AccountService.prototype.test = function () {
-        var t = JSON.parse(localStorage.getItem('token'));
-        console.log(t);
-        var jwtHelper = new angular2_jwt_1.JwtHelper();
-        var token = localStorage.getItem('token');
-        console.log(jwtHelper.decodeToken(token), jwtHelper.getTokenExpirationDate(token), jwtHelper.isTokenExpired(token));
+    AccountService.prototype.handleError = function (error) {
+        var err = error.json();
+        return Observable_1.Observable.throw(err);
     };
     AccountService = __decorate([
         core_1.Injectable(), 
@@ -90,4 +85,10 @@ var AccountService = (function () {
     return AccountService;
 }());
 exports.AccountService = AccountService;
+/*
+    private isEmpty(obj: Object) {
+        for (var x in obj) { if (obj.hasOwnProperty(x)) return false; }
+        return true;
+    }
+*/ 
 //# sourceMappingURL=account.service.js.map

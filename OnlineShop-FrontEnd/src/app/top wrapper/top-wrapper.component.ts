@@ -2,64 +2,64 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AccountService } from '../core/account.service';
-import { ProductService } from '../middle wrapper/shared/product.service';
 import { ShoppingCartService } from '../core/shopping-cart.service';
-
-import { Product } from '../middle wrapper/shared/product';
-import { ShoppingCartItem } from '../shared/shopping-cart-item';
+import { PostmanService } from '../shared/postman.service';
 
 @Component({
   selector: 'my-top-wrapper',
   templateUrl: 'app/top wrapper/top-wrapper.component.html',
-  styleUrls: ['app/top wrapper/top-wrapper.component.css'],
-  providers: [ProductService]
+  styleUrls: ['app/top wrapper/top-wrapper.component.css']
 })
 export class TopWrapperComponent implements OnInit {
-  public paramWrapper: { searchParameter: string } = { searchParameter: '' };
-  public cartItemsCount: number = 0;
-  public cartPrice: number = 0;
+  param: { searchParameter: string };
+  cartCount: number;
+  cartPrice: number;
 
-  constructor(private accountService: AccountService, private router: Router, private cartService: ShoppingCartService) {
-
+  constructor(private accountService: AccountService, private postman: PostmanService, private router: Router, private cartService: ShoppingCartService) {
+    this.cartCount = 0;
+    this.cartPrice = 0;
+    this.param = { searchParameter: '' };
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     //// JQUERY CODE
     // Resizes main navbar header to proper size
-    //$('.navbar').find('.navbar-header').css('height', $('.navbar').innerHeight());
+    $('.navbar').find('.navbar-header').css('height', $('.navbar').innerHeight());
     // Resizes main navbar right part to proper size
-    //$('.navbar').find('.navbar-right').css('height', $('.navbar').innerHeight());
+    $('.navbar').find('.navbar-right').css('height', $('.navbar').innerHeight());
+    // Resizes shopping cart part to proper size
+     $('.navbar-right').find('.shopping-cart').css('width', $('.navbar-right').innerHeight());
     $('#myCarousel').carousel({
       pause: 'null',
       interval: 3000
     })
 
-    this.subscribeForItemAddedEvents();
-    this.subscribeForItemRemovedEvents();
+    this.subscribeForProductAddedEvents();
+    this.subscribeForProductRemovedEvents();
   }
 
-  private subscribeForItemAddedEvents() {
-    this.cartService.itemAdded$.subscribe(
-      (item: ShoppingCartItem) => {
-        ++this.cartItemsCount;
-        this.cartPrice += item.price;});
+  search() {
+    this.postman.sendSearchParam(this.param.searchParameter);
+    this.router.navigateByUrl('/search');
   }
-
-  private subscribeForItemRemovedEvents() {
-    this.cartService.itemRemoved$.subscribe(
-      (item: ShoppingCartItem) => {
-        --this.cartItemsCount;
-        this.cartPrice -= item.price;
-        console.log(item);});
-  }
-
 
   logout(event: any) {
     this.accountService.logout();
   }
 
-  search() {
-    sessionStorage.setItem('searchParamWrapper', JSON.stringify(this.paramWrapper));
-    this.router.navigateByUrl('/search');
+  private subscribeForProductAddedEvents() {
+    this.cartService.productAdded$.subscribe(
+      (price: number) => {
+        ++this.cartCount;
+        this.cartPrice += price;
+      });
+  }
+
+  private subscribeForProductRemovedEvents() {
+    this.cartService.productRemoved$.subscribe(
+      (price: number) => {
+        --this.cartCount;
+        this.cartPrice -= price;
+      });
   }
 }

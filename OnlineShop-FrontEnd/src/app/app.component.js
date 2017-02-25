@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var shopping_cart_service_1 = require('./core/shopping-cart.service');
 var account_service_1 = require('./core/account.service');
+var postman_service_1 = require('./shared/postman.service');
 var AppComponent = (function () {
     function AppComponent() {
     }
@@ -19,7 +20,7 @@ var AppComponent = (function () {
             selector: 'my-app',
             template: "\n  <my-top-wrapper></my-top-wrapper>\n  <router-outlet></router-outlet>\n  <my-bottom-wrapper></my-bottom-wrapper>",
             styles: ["\n  :host-context(html, body) {\n    height: 100%;\n    width: 100%;\n  }"],
-            providers: [shopping_cart_service_1.ShoppingCartService, account_service_1.AccountService]
+            providers: [shopping_cart_service_1.ShoppingCartService, account_service_1.AccountService, postman_service_1.PostmanService]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

@@ -5,55 +5,59 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-
 import 'rxjs/add/operator/take';
+import { AppSettings } from '../../app.settings';
 
 import { Product } from './product';
 
 @Injectable()
 export class ProductService {
-  private leftUrl: string = 'http://localhost:54254/api/products';
-  private newProductsLeftUrl = 'http://localhost:54254/api/products/new';
-  private bestProductsLeftUrl = 'http://localhost:54254/api/products/best';
 
   constructor(private httpService: Http) { }
 
-  public getProductsIdList(): Observable<number[]> {
-    let url = this.leftUrl;
-    return this.httpService.get(url)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
-  public getProductsIdListBy(paramWrapper: { target: string, category: string, type: string} | { searchParameter: string }): Observable<number[]> {
+  getProductsIdsBy(params: { target: string, category: string, type: string } | { searchParameter: string }): Observable<number[]> {
     // Jquery
-    let queryString = $.param(paramWrapper);
+    let queryString = $.param(params);
 
-    let url = this.leftUrl.concat('/?').concat(queryString);
+    let url = AppSettings.API_ENDPOINT + '/api/products/ids/?' + queryString;
     return this.httpService.get(url)
-      .map(this.extractData)
+      .map(this.extractMultipleData)
       .catch(this.handleError);
   }
 
-  public getProductBy(id: number): Observable<Product[]> {
-    let url = this.leftUrl.concat('/').concat(id.toString());
+
+  getProductBy(id: number): Observable<Product> {
+    let url = AppSettings.API_ENDPOINT + '/api/products/' + id.toString();
     return this.httpService.get(url)
-      .map(this.extractData)
+      .map(this.extractSingleData)
       .catch(this.handleError);
   }
 
-  public getNewProducts(): Observable<Product[]> {
-    return this.httpService.get(this.newProductsLeftUrl)
-      .map(this.extractData)
+  getProductsBy(ids: number[]): Observable<Product[]> {
+    let url = AppSettings.API_ENDPOINT + '/api/products/?ids=' + ids.toString();
+    return this.httpService.get(url)
+      .map(this.extractMultipleData)
       .catch(this.handleError);
   }
 
-  public getBestProducts(): Observable<Product[]> {
-    return this.httpService.get(this.bestProductsLeftUrl)
-      .map(this.extractData)
+  getNewProducts(): Observable<Product[]> {
+    return this.httpService.get(AppSettings.API_ENDPOINT + '/api/products/new')
+      .map(this.extractMultipleData)
       .catch(this.handleError);
   }
 
-  private extractData(res: Response) {
+  getBestProducts(): Observable<Product[]> {
+    return this.httpService.get(AppSettings.API_ENDPOINT + '/api/products/best')
+      .map(this.extractMultipleData)
+      .catch(this.handleError);
+  }
+
+  private extractSingleData(res: Response) {
+    let body = res.json();
+    return body || {};
+  }
+
+  private extractMultipleData(res: Response) {
     let body = res.json();
     return body || [];
   }
@@ -70,5 +74,26 @@ export class ProductService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-
 }
+
+/*
+  public getProductBy(paramWrapper: { id: number } | { idList: number[] }): Observable<Product[]> {
+      if (this.compareKeys(paramWrapper, ['id']))
+        this.getProductById(paramWrapper);
+      else if (this.compareKeys(paramWrapper, ['idList']))
+        this.getProductByIdList(paramWrapper);
+  
+      let url = this.leftUrl.concat('/').concat(id.toString());
+      return this.httpService.get(url)
+        .map(this.extractData)
+        .catch(this.handleError);
+    }
+  */
+
+   /*
+    private compareKeys(first: Object, keys: string[]): boolean {
+      let firstKeys = Object.keys(first).sort();
+      let secondKeys = keys.sort();
+      return JSON.stringify(firstKeys) === JSON.stringify(keys.sort());
+    }
+  */

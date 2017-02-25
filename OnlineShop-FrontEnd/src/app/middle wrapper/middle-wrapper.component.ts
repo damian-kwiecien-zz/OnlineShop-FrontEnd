@@ -26,7 +26,6 @@ import { ProductComponent } from './product/product.component'
     margin-top: 5%;
     margin-bottom: 5%;
   }`]
-  //styleUrls: ['app/middle-wrapper.component.css'],
 })
 export class MiddleWrapperComponent implements AfterViewChecked {
 
@@ -37,7 +36,7 @@ export class MiddleWrapperComponent implements AfterViewChecked {
   }
 
     // Jquery
-  // Without it background have wrong height
+  // Without it background will have wrong height
   private setMiddleBackgroundHeightLikeMiddleContentHeight() {
     $(function() { $('.middle-background').css('min-height', $('.middle-content').outerHeight(true))});
   }

@@ -16,7 +16,7 @@ var BottomWrapperComponent = (function () {
         core_1.Component({
             selector: 'my-bottom-wrapper',
             templateUrl: 'app/bottom wrapper/bottom-wrapper.component.html',
-            styles: ["\n  .bottom-background {\n    position: relative;\n    width: 100%;\n    height: 60%;\n    background-image: url(\"/assets/images/backgrounds/bg6.jpg\");\n    background-size: cover;\n    background-repeat: no-repeat;\n    background-position: center center;\n  }\n\n  .bottom-content {\n    position: absolute;\n    width: 100%;\n  }\n  \n  .bottom-content > nav {\n    height: 100%;\n  }\n  \n  nav {\n    text-align: center;\n    margin-top: 15%;\n  }\n  \n  .btn-group {\n    font-size: xx-large;\n  }"]
+            styleUrls: ['app/bottom wrapper/bottom-wrapper.component.css']
         }), 
         __metadata('design:paramtypes', [])
     ], BottomWrapperComponent);

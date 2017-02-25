@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ShoppingCartService } from './core/shopping-cart.service';
 import { AccountService } from './core/account.service';
+import { PostmanService } from './shared/postman.service';
 
 @Component({
   selector: 'my-app',
@@ -13,6 +14,6 @@ import { AccountService } from './core/account.service';
     height: 100%;
     width: 100%;
   }`],
-  providers: [ShoppingCartService, AccountService]
+  providers: [ShoppingCartService, AccountService, PostmanService]
 })
 export class AppComponent { }

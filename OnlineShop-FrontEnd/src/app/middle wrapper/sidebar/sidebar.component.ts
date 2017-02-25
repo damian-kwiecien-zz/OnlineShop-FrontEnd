@@ -28,15 +28,19 @@ import 'rxjs/add/operator/filter';
 }`]
 })
 export class SidebarComponent implements OnInit {
-  public heSelected: boolean = false;
-  public sheSelected: boolean = false;
-  public kidsSelected: boolean = false;
+  heSelected: boolean = false;
+  sheSelected: boolean = false;
+  kidsSelected: boolean = false;
 
   private errorMessage: any;
 
 
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+    this.heSelected = false;
+    this.sheSelected = false;
+    this.kidsSelected = false;
+   }
 
   ngOnInit(): void {
     this.router.events.filter(e => e instanceof NavigationEnd)
@@ -45,7 +49,7 @@ export class SidebarComponent implements OnInit {
       error => { this.errorMessage = <any>error });
   }
 
-  prepareSidebar(url: string): void {
+  private prepareSidebar(url: string): void {
     let tab = url.split('/');
     // First element is empty
     tab.shift();

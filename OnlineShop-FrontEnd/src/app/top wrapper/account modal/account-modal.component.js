@@ -13,25 +13,24 @@ var register_binding_model_1 = require('../../shared/register-binding-model');
 var login_binding_model_1 = require('../../shared/login-binding-model');
 var account_service_1 = require('../../core/account.service');
 var AccountModal = (function () {
-    function AccountModal(accountService) {
+    function AccountModal(accountService, cd) {
         this.accountService = accountService;
+        this.cd = cd;
         this.registerShown = false;
         this.loginShown = true;
         this.active = false;
-        this.loginModel = new login_binding_model_1.LoginBindingModel();
         this.registerModel = new register_binding_model_1.RegisterBindingModel();
-        this.loading = false;
+        this.loginModel = new login_binding_model_1.LoginBindingModel();
+        this.registerResult = '';
+        this.loginResult = '';
     }
     AccountModal.prototype.register = function () {
-        // Jquery
-        //$(".close-account-modal").trigger("click");
         var _this = this;
-        this.loading = true;
-        this.accountService.register(this.registerModel).subscribe(function (data) { }, function (error) { _this.loading = false; });
+        this.accountService.register(this.registerModel).subscribe(function (data) { }, function (error) { _this.registerResult = error["ModelState"][""]; _this.cd.detectChanges(); }, function () { _this.registerResult = 'Success!'; _this.cd.detectChanges(); });
     };
     AccountModal.prototype.login = function () {
         var _this = this;
-        this.accountService.login(this.loginModel).subscribe(function (data) { }, function (error) { _this.loading = false; });
+        this.accountService.login(this.loginModel).subscribe(function (data) { }, function (error) { _this.loginResult = error["error_description"]; _this.cd.detectChanges(); }, function () { _this.loginResult = 'Success!'; _this.cd.detectChanges(); });
     };
     AccountModal.prototype.onKeyup = function (event) {
         if (event.target.value === '')
@@ -46,8 +45,6 @@ var AccountModal = (function () {
         $(".register").parent().addClass('active');
         $(".login").parent().removeClass('active');
         $(".register-form").fadeIn(600);
-        this.accountService.loginIn();
-        this.accountService.test();
     };
     AccountModal.prototype.showLogin = function (event) {
         this.loginShown = true;
@@ -63,7 +60,7 @@ var AccountModal = (function () {
             templateUrl: 'app/top wrapper/account modal/account-modal.component.html',
             styleUrls: ['app/top wrapper/account modal/account-modal.component.css']
         }), 
-        __metadata('design:paramtypes', [account_service_1.AccountService])
+        __metadata('design:paramtypes', [account_service_1.AccountService, core_1.ChangeDetectorRef])
     ], AccountModal);
     return AccountModal;
 }());

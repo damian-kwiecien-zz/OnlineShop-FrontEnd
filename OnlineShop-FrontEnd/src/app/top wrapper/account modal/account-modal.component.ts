@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { RegisterBindingModel } from '../../shared/register-binding-model';
 import { LoginBindingModel } from '../../shared/login-binding-model';
@@ -10,30 +10,36 @@ import { AccountService } from '../../core/account.service';
     styleUrls: ['app/top wrapper/account modal/account-modal.component.css']
 })
 export class AccountModal {
-    public registerShown: boolean = false;
-    public loginShown: boolean = true;
-    public active = false;
-    public loginModel: LoginBindingModel = new LoginBindingModel();
-    public registerModel: RegisterBindingModel = new RegisterBindingModel();
-    public loading = false;
+    registerShown: boolean;
+    loginShown: boolean;
+    active: boolean;
+    loginModel: LoginBindingModel;
+    registerModel: RegisterBindingModel;
+    registerResult: any;
+    loginResult: any;
 
-    constructor(private accountService: AccountService) {}
-     
+    constructor(private accountService: AccountService, private cd: ChangeDetectorRef) {
+        this.registerShown = false;
+        this.loginShown = true;
+        this.active = false;
+        this.registerModel = new RegisterBindingModel();
+        this.loginModel = new LoginBindingModel();
+        this.registerResult = '';
+        this.loginResult = '';
+    }
 
     register() {
-        // Jquery
-        //$(".close-account-modal").trigger("click");
-
-        this.loading = true;
         this.accountService.register(this.registerModel).subscribe(
             data => { },
-            error => { /*TO DO: error*/ this.loading = false; });
+            error => { this.registerResult = error["ModelState"][""]; this.cd.detectChanges(); },
+            () => { this.registerResult = 'Success!'; this.cd.detectChanges(); });
     }
 
     login() {
         this.accountService.login(this.loginModel).subscribe(
             data => { },
-            error => { /*TO DO: error*/ this.loading = false; });
+            error => { this.loginResult = error["error_description"]; this.cd.detectChanges(); },
+            () => { this.loginResult = 'Success!'; this.cd.detectChanges(); });
     }
 
     onKeyup(event: any) {
@@ -51,9 +57,6 @@ export class AccountModal {
         $(".register").parent().addClass('active');
         $(".login").parent().removeClass('active');
         $(".register-form").fadeIn(600);
-
-        this.accountService.loginIn();
-        this.accountService.test();
     }
 
     showLogin(event: any) {
@@ -65,4 +68,4 @@ export class AccountModal {
         $(".register").parent().removeClass('active');
         $(".login-form").fadeIn(600);
     }
-    }
+}

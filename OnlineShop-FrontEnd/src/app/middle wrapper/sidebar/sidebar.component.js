@@ -17,6 +17,9 @@ var SidebarComponent = (function () {
         this.heSelected = false;
         this.sheSelected = false;
         this.kidsSelected = false;
+        this.heSelected = false;
+        this.sheSelected = false;
+        this.kidsSelected = false;
     }
     SidebarComponent.prototype.ngOnInit = function () {
         var _this = this;

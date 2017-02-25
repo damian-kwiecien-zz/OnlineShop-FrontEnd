@@ -1,1 +1,1 @@
-{"version":3,"file":"shopping-cart-item.js","sourceRoot":"","sources":["shopping-cart-item.ts"],"names":[],"mappings":";AAAA;IAAA;IAMA,CAAC;IAAD,uBAAC;AAAD,CAAC,AAND,IAMC;AANY,wBAAgB,mBAM5B,CAAA"}
+{"version":3,"file":"shopping-cart-item.js","sourceRoot":"","sources":["shopping-cart-item.ts"],"names":[],"mappings":";AAAA;IACI,0BACW,EAAU,EACV,IAAY,EACZ,KAAa,EACb,QAAgB,EAChB,MAAc;QAJd,OAAE,GAAF,EAAE,CAAQ;QACV,SAAI,GAAJ,IAAI,CAAQ;QACZ,UAAK,GAAL,KAAK,CAAQ;QACb,aAAQ,GAAR,QAAQ,CAAQ;QAChB,WAAM,GAAN,MAAM,CAAQ;IAAI,CAAC;IAClC,uBAAC;AAAD,CAAC,AAPD,IAOC;AAPY,wBAAgB,mBAO5B,CAAA"}

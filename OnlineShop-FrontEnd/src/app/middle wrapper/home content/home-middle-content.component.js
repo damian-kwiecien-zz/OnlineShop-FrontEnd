@@ -10,10 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var product_service_1 = require('../shared/product.service');
+var shopping_cart_service_1 = require('../../core/shopping-cart.service');
 require('rxjs/add/operator/take');
 var HomeMiddleContentComponent = (function () {
-    function HomeMiddleContentComponent(productService) {
+    function HomeMiddleContentComponent(productService, cartService) {
         this.productService = productService;
+        this.cartService = cartService;
+        this.modalId = "homeModal";
     }
     HomeMiddleContentComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -22,14 +25,20 @@ var HomeMiddleContentComponent = (function () {
         this.productService.getBestProducts().take(3)
             .subscribe(function (list) { _this.bestProducts = list; }, function (error) { return _this.errorMessage = error; });
     };
+    HomeMiddleContentComponent.prototype.addToCart = function (event) {
+        this.cartService.addProduct(this.selectedProduct);
+    };
+    HomeMiddleContentComponent.prototype.raiseModal = function (product) {
+        this.selectedProduct = product;
+    };
     HomeMiddleContentComponent = __decorate([
         core_1.Component({
             selector: 'my-home-middle-content',
             templateUrl: 'app/middle wrapper/home content/home-middle-content.component.html',
-            styles: ["\n  .page-header {\n    margin-bottom: 3%;\n  }\n  .caption > p ,\n  .caption > h3 {\n    text-align: center;\n  }"],
+            styles: ["\n  .page-header {\n    margin-bottom: 3%;\n  }\n  .caption > p ,\n  .caption > h3 {\n    text-align: center;\n  }\n"],
             providers: [product_service_1.ProductService]
         }), 
-        __metadata('design:paramtypes', [product_service_1.ProductService])
+        __metadata('design:paramtypes', [product_service_1.ProductService, shopping_cart_service_1.ShoppingCartService])
     ], HomeMiddleContentComponent);
     return HomeMiddleContentComponent;
 }());

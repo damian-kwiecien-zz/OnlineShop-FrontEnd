@@ -16,7 +16,7 @@ var MiddleWrapperComponent = (function () {
         this.setMiddleBackgroundHeightLikeMiddleContentHeight();
     };
     // Jquery
-    // Without it background have wrong height
+    // Without it background will have wrong height
     MiddleWrapperComponent.prototype.setMiddleBackgroundHeightLikeMiddleContentHeight = function () {
         $(function () { $('.middle-background').css('min-height', $('.middle-content').outerHeight(true)); });
     };

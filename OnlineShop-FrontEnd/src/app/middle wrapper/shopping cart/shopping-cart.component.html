@@ -49,7 +49,7 @@
                             <h5>Subtotal</h5>
                         </td>
                         <td class="text-right">
-                            <h5><strong>{{ (item?.price * item?.quantity) + shipping }}</strong></h5>
+                            <h5><strong>{{ subtotalPrice | currency:'EUR':false }}</strong></h5>
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +60,7 @@
                             <h5>Estimated shipping</h5>
                         </td>
                         <td class="text-right">
-                            <h5><strong>{{ shipping }}$</strong></h5>
+                            <h5><strong>{{ shipping | currency:'EUR':false }}</strong></h5>
                         </td>
                     </tr>
                     <tr>
@@ -71,7 +71,7 @@
                             <h3>Total</h3>
                         </td>
                         <td class="text-right">
-                            <h3><strong>{{ subtotalPrice + shipping }}</strong></h3>
+                            <h3><strong>{{ subtotalPrice + shipping | currency:'EUR':false }}</strong></h3>
                         </td>
                     </tr>
                     <tr>

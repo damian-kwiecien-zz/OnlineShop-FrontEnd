@@ -1,129 +1,118 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Headers, RequestOptions } from '@angular/http';
-import { Observable, } from 'rxjs/Observable';
-
 import { ShoppingCartItem } from '../shared/shopping-cart-item'
+
+import { Product } from '../middle wrapper/shared/product';
+import { Observable, } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-
 import 'rxjs/add/operator/take';
 import 'rxjs/Rx';
 
-
-import { Product } from '../middle wrapper/shared/product';
-import {Observer} from 'rxjs/Observer';
-import {Subject} from 'rxjs/Subject';
-import {} from 'rxjs/Operator'
 @Injectable()
 export class ShoppingCartService {
-  private _empty: boolean = true;
-  get empty(): boolean {
-    let cartItems = this.getItems();
 
-    // Shopping Cart is not empty when exist and has lenght != 0
-    if (cartItems && cartItems.length != 0) {
-      return false;
-    }
-    else
-      return true;
-  }
-  
+  private _empty: boolean;
+
   // Sources
-   itemAddedSource = new Subject<ShoppingCartItem>();
-   itemRemovedSource = new Subject<ShoppingCartItem>();
+  productAddedSource = new Subject<number>();
+  productRemovedSource = new Subject<number>();
 
   // Streams
-  public itemAdded$: Observable<ShoppingCartItem>;
-  public itemRemoved$: Observable<ShoppingCartItem>;
+  public productAdded$: Observable<number>;
+  public productRemoved$: Observable<number>;
 
-  constructor(private httpService: Http) { 
-    this.itemAdded$ = this.itemAddedSource.asObservable();
-    this.itemRemoved$ = this.itemRemovedSource.asObservable();
+  get empty(): boolean {
+    if (this.getItems().length == 0) {
+      return true;
+    }
+    else
+      return false;
   }
 
-  public addItem(product: Product) {
+  constructor() {
+    this.productAdded$ = this.productAddedSource.asObservable();
+    this.productRemoved$ = this.productRemovedSource.asObservable();
+    this._empty = true;
+
+    localStorage.setItem('shoppingCartItems', '[]');
+  }
+
+  getItems(): ShoppingCartItem[] {
+    return JSON.parse(localStorage.getItem('shoppingCartItems')) as ShoppingCartItem[] || []
+  }
+
+  addProduct(param: Product | { productId: number }) {
+    if (Object.keys(param).sort().join() === "Category,Description,Details,Id,Name,Price,ProductImages,Target,Type")
+      this.addProduct_1(param as Product);
+    else
+      this.addProduct_2(param as { productId: number });
+  }
+
+  private addProduct_1(param: Product) {
     let cartItems = this.getItems();
-    
-    // Shopping Cart is not empty
-    if (!this.empty) {
+    let i = cartItems.findIndex(item => item.id == param.Id);
 
-      let result = cartItems.findIndex(item => item.id == product.Id);
-      // Mean object not found, so we create one
-      if (result == -1) {
-        let cartItem = this.createItem(product);
-        cartItems.push(cartItem);
-        this.saveItemsToSessionStorage(cartItems);
-
-        this.emitItemAddedEvent(cartItem);
-      }
-      // Mean object exist, so we increase quantity of duplicate
-      else{
-        ++(cartItems[result].quantity);
-        this.saveItemsToSessionStorage(cartItems);
-
-        this.emitItemAddedEvent(cartItems[result]);
-      }   
+    // Means item not found, so we create one
+    if (i == -1) {
+      let cartItem = this.createItem(param);
+      cartItems.push(cartItem);
+      this.setItems(cartItems);
     }
+    // Means item exist, so we increase quantity of duplicate
     else {
-        let cartItem = this.createItem(product);
-        cartItems.push(cartItem);
-        this.saveItemsToSessionStorage(cartItems);
-
-        this.emitItemAddedEvent(cartItem);
+      ++(cartItems[i].quantity);
+      this.setItems(cartItems);
     }
+    this.emitProductAddedEvent(param.Price);
   }
 
-  public removeItemBy(id: number): void {
+  private addProduct_2(param: { productId: number }) {
+    let cartItems = this.getItems();
+    let i = cartItems.findIndex(item => item.id == param.productId);
+    // i == -1 throw error
+    ++(cartItems[i].quantity);
+    this.setItems(cartItems);
+    this.emitProductAddedEvent(cartItems[i].price);
+  }
+
+  removeItemBy(id: number) {
     let cartItems = this.getItems();
     let i = cartItems.findIndex(item => item.id == id);
 
-    if(i == -1)
-      return; /*TO DO: error handling here */
-
-    if(cartItems[i].quantity == 1) {
-      this.emitItemRemovedEvent(cartItems[i]);
+    if (cartItems[i].quantity == 1) {
+      this.emitProductRemovedEvent(cartItems[i].price);
 
       cartItems.splice(i, 1);
-      this.saveItemsToSessionStorage(cartItems);
+      this.setItems(cartItems);
     }
     else {
       --cartItems[i].quantity;
-      this.saveItemsToSessionStorage(cartItems);
+      this.setItems(cartItems);
 
-      this.emitItemRemovedEvent(cartItems[i]);
+      this.emitProductRemovedEvent(cartItems[i].price);
     }
   }
 
-  public getItems(): ShoppingCartItem[] {
-    let stringCartItems = sessionStorage.getItem('shoppingCartItems');
-    let cartItems = <ShoppingCartItem[]>JSON.parse(stringCartItems);
-    return cartItems || [];
-  }
-
   private createItem(product: Product): ShoppingCartItem {
-     let cartItem = new ShoppingCartItem();
-
-       cartItem.id = product.Id;
-        cartItem.name = product.Name;
-        cartItem.imgUrl = product.ImgUrl;
-        cartItem.price = product.Price;
-        cartItem.quantity = 1;
-        return cartItem;
+    return new ShoppingCartItem(
+      product.Id,
+      product.Name,
+      product.Price,
+      1,
+      product.ProductImages[0].ImgUrl);
   }
 
-  private saveItemsToSessionStorage(cartItems: ShoppingCartItem[]): void {
-    sessionStorage.setItem('shoppingCartItems', JSON.stringify(cartItems));
+  private setItems(cartItems: ShoppingCartItem[]): void {
+    localStorage.setItem('shoppingCartItems', JSON.stringify(cartItems));
   }
 
-  private emitItemAddedEvent(cartItem: ShoppingCartItem): void {
-    this.itemAddedSource.next(cartItem);
+  private emitProductAddedEvent(price: number): void {
+    this.productAddedSource.next(price);
   }
 
-  private emitItemRemovedEvent(cartItem: ShoppingCartItem): void {
-    this.itemRemovedSource.next(cartItem);
+  private emitProductRemovedEvent(price: number): void {
+    this.productRemovedSource.next(price);
   }
-
-
 }

@@ -1,7 +1,8 @@
 export class ShoppingCartItem {
-    id: number;
-    name: string;
-    price: number;
-    quantity: number;
-    imgUrl: string;
+    constructor(
+        public id: number,
+        public name: string,
+        public price: number,
+        public quantity: number,
+        public imgUrl: string) { }
 }

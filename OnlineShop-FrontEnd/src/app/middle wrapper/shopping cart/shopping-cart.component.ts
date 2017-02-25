@@ -12,65 +12,44 @@ import { ShoppingCartService } from '../../core/shopping-cart.service';
   templateUrl: 'app/middle wrapper/shopping cart/shopping-cart.component.html'
 })
 export class ShoppingCartComponent implements OnInit {
-  public cartItems: ShoppingCartItem[];
-  public subtotalPrice: number;
-  public shipping: number = 5;
-  //public empty = true;
+  cartItems: ShoppingCartItem[];
+  subtotalPrice: number;
+  shipping: number = 5;
 
-
-  constructor(private cartService: ShoppingCartService) { }
+  constructor(private cartService: ShoppingCartService) {
+    this.subtotalPrice = 0;
+  }
 
   ngOnInit() {
     this.cartItems = this.cartService.getItems();
     this.prepareSubtotalPrice();
-
-    /*
-    if(this.cartItems.length == 0)
-      this.empty = true;
-    else
-    this.empty = false;
-    */
   }
 
-  private prepareSubtotalPrice(){
-      this.subtotalPrice = 0;
-    for(let it of this.cartItems) {
-      this.subtotalPrice += it.price;
-    }
-  }
-  
   removeItem(item: ShoppingCartItem) {
     this.cartService.removeItemBy(item.id);
-
     this.cartItems = this.cartService.getItems();
+    this.prepareSubtotalPrice();
   }
 
   increaseQuantity(item: ShoppingCartItem, event: any) {
     ++event.target.nextElementSibling.nextElementSibling.value;
-    let prod = new Product();
-    prod.Id = item.id;
-    prod.ImgUrl = item.imgUrl;
-    prod.Name = item.name;
-    prod.Price = item.price;
-    this.cartService.addItem(prod);
+    this.cartService.addProduct({ productId: item.id });
     this.cartItems = this.cartService.getItems();
+    this.prepareSubtotalPrice();
   }
-    decreaseQuantity(item: ShoppingCartItem, event: any) {
+  decreaseQuantity(item: ShoppingCartItem, event: any) {
     --event.target.nextElementSibling.value;
-    let prod = new Product();
-    prod.Id = item.id;
-    prod.ImgUrl = item.imgUrl;
-    prod.Name = item.name;
-    prod.Price = item.price;
     this.cartService.removeItemBy(item.id)
     this.cartItems = this.cartService.getItems();
-    /*
-    if(this.cartItems.length == 0)
-      this.empty = true;
-    else
-    this.empty = false;
-    */
+    this.prepareSubtotalPrice();
   }
+  
+  private prepareSubtotalPrice() {
+    for (let it of this.cartItems) {
+      this.subtotalPrice += it.price * it.quantity;
+    }
+  }
+
 }
 
 

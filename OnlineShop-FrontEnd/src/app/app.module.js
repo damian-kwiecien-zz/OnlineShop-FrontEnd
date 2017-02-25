@@ -179,6 +179,11 @@ var routes = [{
                 ],
             }
         ]
+    },
+    {
+        path: '**',
+        redirectTo: '',
+        pathMatch: 'full'
     }];
 var AppModule = (function () {
     function AppModule() {

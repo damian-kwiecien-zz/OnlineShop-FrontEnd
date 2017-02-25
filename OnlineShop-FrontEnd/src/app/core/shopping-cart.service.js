@@ -9,103 +9,94 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
 var shopping_cart_item_1 = require('../shared/shopping-cart-item');
+var Subject_1 = require('rxjs/Subject');
 require('rxjs/add/operator/catch');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/take');
 require('rxjs/Rx');
-var Subject_1 = require('rxjs/Subject');
 var ShoppingCartService = (function () {
-    function ShoppingCartService(httpService) {
-        this.httpService = httpService;
-        this._empty = true;
+    function ShoppingCartService() {
         // Sources
-        this.itemAddedSource = new Subject_1.Subject();
-        this.itemRemovedSource = new Subject_1.Subject();
-        this.itemAdded$ = this.itemAddedSource.asObservable();
-        this.itemRemoved$ = this.itemRemovedSource.asObservable();
+        this.productAddedSource = new Subject_1.Subject();
+        this.productRemovedSource = new Subject_1.Subject();
+        this.productAdded$ = this.productAddedSource.asObservable();
+        this.productRemoved$ = this.productRemovedSource.asObservable();
+        this._empty = true;
+        localStorage.setItem('shoppingCartItems', '[]');
     }
     Object.defineProperty(ShoppingCartService.prototype, "empty", {
         get: function () {
-            var cartItems = this.getItems();
-            // Shopping Cart is not empty when exist and has lenght != 0
-            if (cartItems && cartItems.length != 0) {
-                return false;
+            if (this.getItems().length == 0) {
+                return true;
             }
             else
-                return true;
+                return false;
         },
         enumerable: true,
         configurable: true
     });
-    ShoppingCartService.prototype.addItem = function (product) {
+    ShoppingCartService.prototype.getItems = function () {
+        return JSON.parse(localStorage.getItem('shoppingCartItems')) || [];
+    };
+    ShoppingCartService.prototype.addProduct = function (param) {
+        if (Object.keys(param).sort().join() === "Category,Description,Details,Id,Name,Price,ProductImages,Target,Type")
+            this.addProduct_1(param);
+        else
+            this.addProduct_2(param);
+    };
+    ShoppingCartService.prototype.addProduct_1 = function (param) {
         var cartItems = this.getItems();
-        // Shopping Cart is not empty
-        if (!this.empty) {
-            var result = cartItems.findIndex(function (item) { return item.id == product.Id; });
-            // Mean object not found, so we create one
-            if (result == -1) {
-                var cartItem = this.createItem(product);
-                cartItems.push(cartItem);
-                this.saveItemsToSessionStorage(cartItems);
-                this.emitItemAddedEvent(cartItem);
-            }
-            else {
-                ++(cartItems[result].quantity);
-                this.saveItemsToSessionStorage(cartItems);
-                this.emitItemAddedEvent(cartItems[result]);
-            }
+        var i = cartItems.findIndex(function (item) { return item.id == param.Id; });
+        // Means item not found, so we create one
+        if (i == -1) {
+            var cartItem = this.createItem(param);
+            cartItems.push(cartItem);
+            this.setItems(cartItems);
         }
         else {
-            var cartItem = this.createItem(product);
-            cartItems.push(cartItem);
-            this.saveItemsToSessionStorage(cartItems);
-            this.emitItemAddedEvent(cartItem);
+            ++(cartItems[i].quantity);
+            this.setItems(cartItems);
         }
+        this.emitProductAddedEvent(param.Price);
+    };
+    ShoppingCartService.prototype.addProduct_2 = function (param) {
+        var cartItems = this.getItems();
+        var i = cartItems.findIndex(function (item) { return item.id == param.productId; });
+        // i == -1 throw error
+        ++(cartItems[i].quantity);
+        this.setItems(cartItems);
+        this.emitProductAddedEvent(cartItems[i].price);
     };
     ShoppingCartService.prototype.removeItemBy = function (id) {
         var cartItems = this.getItems();
         var i = cartItems.findIndex(function (item) { return item.id == id; });
-        if (i == -1)
-            return; /*TO DO: error handling here */
         if (cartItems[i].quantity == 1) {
-            this.emitItemRemovedEvent(cartItems[i]);
+            this.emitProductRemovedEvent(cartItems[i].price);
             cartItems.splice(i, 1);
-            this.saveItemsToSessionStorage(cartItems);
+            this.setItems(cartItems);
         }
         else {
             --cartItems[i].quantity;
-            this.saveItemsToSessionStorage(cartItems);
-            this.emitItemRemovedEvent(cartItems[i]);
+            this.setItems(cartItems);
+            this.emitProductRemovedEvent(cartItems[i].price);
         }
     };
-    ShoppingCartService.prototype.getItems = function () {
-        var stringCartItems = sessionStorage.getItem('shoppingCartItems');
-        var cartItems = JSON.parse(stringCartItems);
-        return cartItems || [];
-    };
     ShoppingCartService.prototype.createItem = function (product) {
-        var cartItem = new shopping_cart_item_1.ShoppingCartItem();
-        cartItem.id = product.Id;
-        cartItem.name = product.Name;
-        cartItem.imgUrl = product.ImgUrl;
-        cartItem.price = product.Price;
-        cartItem.quantity = 1;
-        return cartItem;
+        return new shopping_cart_item_1.ShoppingCartItem(product.Id, product.Name, product.Price, 1, product.ProductImages[0].ImgUrl);
     };
-    ShoppingCartService.prototype.saveItemsToSessionStorage = function (cartItems) {
-        sessionStorage.setItem('shoppingCartItems', JSON.stringify(cartItems));
+    ShoppingCartService.prototype.setItems = function (cartItems) {
+        localStorage.setItem('shoppingCartItems', JSON.stringify(cartItems));
     };
-    ShoppingCartService.prototype.emitItemAddedEvent = function (cartItem) {
-        this.itemAddedSource.next(cartItem);
+    ShoppingCartService.prototype.emitProductAddedEvent = function (price) {
+        this.productAddedSource.next(price);
     };
-    ShoppingCartService.prototype.emitItemRemovedEvent = function (cartItem) {
-        this.itemRemovedSource.next(cartItem);
+    ShoppingCartService.prototype.emitProductRemovedEvent = function (price) {
+        this.productRemovedSource.next(price);
     };
     ShoppingCartService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [])
     ], ShoppingCartService);
     return ShoppingCartService;
 }());

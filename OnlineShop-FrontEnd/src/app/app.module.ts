@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule, JsonpModule} from '@angular/http';
+import { HttpModule, JsonpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthModule } from './core/auth.module'
@@ -175,6 +175,11 @@ const routes: Routes = [{
     ],
   }
   ]
+},
+{ 
+  path: '**', 
+  redirectTo:'', 
+  pathMatch: 'full' 
 }];
 
 @NgModule({

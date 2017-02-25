@@ -4,10 +4,10 @@
   <div class="modal-dialog" role="document">
 
     <div class="form">
-      <div><button [disabled]="loading" type="button" class="close-account-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+      <div><button type="button" class="close-account-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
       <ul class="tab-group">
-        <li class="tab" (click)="showRegister($event)"><a class="register">Sign Up</a></li>
-        <li class="tab active" (click)="showLogin($event)"><a class="login">Log In</a></li>
+        <li class="tab" (click)="showRegister($event)"><a class="register">Register</a></li>
+        <li class="tab active" (click)="showLogin($event)"><a class="login">Login</a></li>
       </ul>
 
       <!-- tab-content -->
@@ -29,7 +29,7 @@
             <div class="field-wrap">
               <label for="registerPassword">Set A Password<span class="req">*</span></label>
               <input id="registerPassword" (keyup)="onKeyup($event)" [(ngModel)]="registerModel.Password" name="registerPassword" #registerPassword="ngModel"
-                type="password" required autocomplete="off" validateEqual="confirmPassword" reverse="true" minlength="6" required />
+                type="password" autocomplete="off" validateEqual="confirmPassword" reverse="true" minlength="6" required />
               <small [hidden]="registerPassword.valid || (registerPassword.pristine && !registerForm.submitted)" class="text-danger">
                 Password is required and minimum 6 length
               </small>
@@ -44,10 +44,11 @@
                 Password mismatch
               </small>
             </div>
+            <small>{{ registerResult }}</small>  
             <button [disabled]="!registerForm.form.valid" type="submit" class="button button-block">Get Started</button>
             <small [hidden]="registerForm.form.valid" class="text-danger">
                 Button disabled, check imput data
-              </small>
+            </small>        
           </form>
         </div>
 
@@ -58,15 +59,27 @@
 
             <div class="field-wrap">
               <label for="loginEmail">Email Address<span class="req">*</span></label>
-              <input id="loginEmail" (keyup)="onKeyup($event)" [(ngModel)]="loginModel.Email" name="loginEmail" #loginEmail="ngModel" type="email" autocomplete="off" required />
+              <input id="loginEmail" (keyup)="onKeyup($event)" [(ngModel)]="loginModel.Email" name="loginEmail" #loginEmail="ngModel" type="email" 
+              autocomplete="off" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required />
+              <small [hidden]="loginEmail.valid || (loginEmail.pristine && !loginEmail.submitted)" class="text-danger">
+                Email is required and format should be <i>john@doe.com</i>.
+              </small>
             </div>
 
             <div class="field-wrap">
               <label for="loginPassword">Password<span class="req">*</span></label>
-              <input id="loginPassword" (keyup)="onKeyup($event)" [(ngModel)]="loginModel.Password" name="loginPassword" #loginPassword="ngModel" type="password" autocomplete="off" required />
+              <input id="loginPassword" (keyup)="onKeyup($event)" [(ngModel)]="loginModel.Password" name="loginPassword" #loginPassword="ngModel" type="password" 
+              autocomplete="off" minlength="6" required />
+              <small [hidden]="loginPassword.valid || (loginPassword.pristine && !loginPassword.submitted)" class="text-danger">
+                Password is required and minimum 6 length
+              </small>
             </div>
-            <p class="forgot"><a href="#">Forgot Password?</a></p>
-            <button type="submit" class="button button-block">Log In</button>
+            <p class="forgot"><a routerLink="/error">Forgot Password?</a></p>
+            <small>{{ loginResult }}</small>  
+            <button [disabled]="!loginForm.form.valid" type="submit" class="button button-block">Log In</button>
+            <small [hidden]="loginForm.form.valid" class="text-danger">
+                Button disabled, check imput data
+            </small>
           </form>
         </div>
       </div>

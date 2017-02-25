@@ -14,7 +14,7 @@ import { ShoppingCartService } from '../../core/shopping-cart.service';
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="row">
           <div class="col-md-4">
-            <img src="{{ product?.ImgUrl }}" class="img-responsive thumbnail" alt="Cinque Terre">
+            <img src="{{ product?.ProductImages[0]?.ImgUrl }}" class="img-responsive thumbnail" alt="Image not found">
           </div>
           <div class="col-md-8">
             <div class="page-header">
@@ -86,16 +86,21 @@ import { ShoppingCartService } from '../../core/shopping-cart.service';
 export class ProductModalComponent {
   @Input() public product: Product;
   @Input() public id: string;
-  panelGroupId: string = this.id + 'Accordion';
-  panelHeadingIds: string[] = [this.id + 'HeadingOne', this.id + 'HeadingTwo'];
-  divIds: string[] = [this.id + 'CollapseOne', this.id + 'CollapseTwo'];
-  divHrefs: string[] = ['#' + this.divIds[0], '#' + this.divIds[1]];
+  panelGroupId: string;
+  panelHeadingIds: string[];
+  divIds: string[];
+  divHrefs: string[];
 
 
-  constructor(private cartService: ShoppingCartService) { }
+  constructor(private cartService: ShoppingCartService) {
+    this.panelGroupId = this.id + 'Accordion';
+    this.panelHeadingIds = [this.id + 'HeadingOne', this.id + 'HeadingTwo'];
+    this.divIds = [this.id + 'CollapseOne', this.id + 'CollapseTwo'];
+    this.divHrefs = ['#' + this.divIds[0], '#' + this.divIds[1]];
+   }
 
   addToCart(event: any) {
-    this.cartService.addItem(this.product);
+    this.cartService.addProduct(this.product);
   }
 
 }

@@ -1,6 +1,11 @@
 "use strict";
 var ShoppingCartItem = (function () {
-    function ShoppingCartItem() {
+    function ShoppingCartItem(id, name, price, quantity, imgUrl) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.imgUrl = imgUrl;
     }
     return ShoppingCartItem;
 }());

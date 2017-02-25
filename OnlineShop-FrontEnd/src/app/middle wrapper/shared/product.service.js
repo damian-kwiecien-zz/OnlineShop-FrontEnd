@@ -14,44 +14,46 @@ var Observable_1 = require('rxjs/Observable');
 require('rxjs/add/operator/catch');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/take');
+var app_settings_1 = require('../../app.settings');
 var ProductService = (function () {
     function ProductService(httpService) {
         this.httpService = httpService;
-        this.leftUrl = 'http://localhost:54254/api/products';
-        this.newProductsLeftUrl = 'http://localhost:54254/api/products/new';
-        this.bestProductsLeftUrl = 'http://localhost:54254/api/products/best';
     }
-    ProductService.prototype.getProductsIdList = function () {
-        var url = this.leftUrl;
-        return this.httpService.get(url)
-            .map(this.extractData)
-            .catch(this.handleError);
-    };
-    ProductService.prototype.getProductsIdListBy = function (paramWrapper) {
+    ProductService.prototype.getProductsIdsBy = function (params) {
         // Jquery
-        var queryString = $.param(paramWrapper);
-        var url = this.leftUrl.concat('/?').concat(queryString);
+        var queryString = $.param(params);
+        var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/products/ids/?' + queryString;
         return this.httpService.get(url)
-            .map(this.extractData)
+            .map(this.extractMultipleData)
             .catch(this.handleError);
     };
     ProductService.prototype.getProductBy = function (id) {
-        var url = this.leftUrl.concat('/').concat(id.toString());
+        var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/products/' + id.toString();
         return this.httpService.get(url)
-            .map(this.extractData)
+            .map(this.extractSingleData)
+            .catch(this.handleError);
+    };
+    ProductService.prototype.getProductsBy = function (ids) {
+        var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/products/?ids=' + ids.toString();
+        return this.httpService.get(url)
+            .map(this.extractMultipleData)
             .catch(this.handleError);
     };
     ProductService.prototype.getNewProducts = function () {
-        return this.httpService.get(this.newProductsLeftUrl)
-            .map(this.extractData)
+        return this.httpService.get(app_settings_1.AppSettings.API_ENDPOINT + '/api/products/new')
+            .map(this.extractMultipleData)
             .catch(this.handleError);
     };
     ProductService.prototype.getBestProducts = function () {
-        return this.httpService.get(this.bestProductsLeftUrl)
-            .map(this.extractData)
+        return this.httpService.get(app_settings_1.AppSettings.API_ENDPOINT + '/api/products/best')
+            .map(this.extractMultipleData)
             .catch(this.handleError);
     };
-    ProductService.prototype.extractData = function (res) {
+    ProductService.prototype.extractSingleData = function (res) {
+        var body = res.json();
+        return body || {};
+    };
+    ProductService.prototype.extractMultipleData = function (res) {
         var body = res.json();
         return body || [];
     };
@@ -75,4 +77,24 @@ var ProductService = (function () {
     return ProductService;
 }());
 exports.ProductService = ProductService;
+/*
+  public getProductBy(paramWrapper: { id: number } | { idList: number[] }): Observable<Product[]> {
+      if (this.compareKeys(paramWrapper, ['id']))
+        this.getProductById(paramWrapper);
+      else if (this.compareKeys(paramWrapper, ['idList']))
+        this.getProductByIdList(paramWrapper);
+  
+      let url = this.leftUrl.concat('/').concat(id.toString());
+      return this.httpService.get(url)
+        .map(this.extractData)
+        .catch(this.handleError);
+    }
+  */
+/*
+ private compareKeys(first: Object, keys: string[]): boolean {
+   let firstKeys = Object.keys(first).sort();
+   let secondKeys = keys.sort();
+   return JSON.stringify(firstKeys) === JSON.stringify(keys.sort());
+ }
+*/ 
 //# sourceMappingURL=product.service.js.map

@@ -1,11 +1,11 @@
 <div class="top-background">
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-      <div class="item active" style="background-image:url(/assets/images/backgrounds/bg1.jpg)"></div>
-      <div class="item" style="background-image:url(/assets/images/backgrounds/bg2.jpeg)"></div>
-      <div class="item" style="background-image:url(/assets/images/backgrounds/bg3.jpeg)"></div>
-      <div class="item" style="background-image:url(/assets/images/backgrounds/bg4.jpg)"></div>
-      <div class="item" style="background-image:url(/assets/images/backgrounds/bg5.jpeg)"></div>
+      <div class="item active" style="background-image:url(/content/images/backgrounds/bg1.jpg)"></div>
+      <div class="item" style="background-image:url(/content/images/backgrounds/bg2.jpeg)"></div>
+      <div class="item" style="background-image:url(/content/images/backgrounds/bg3.jpeg)"></div>
+      <div class="item" style="background-image:url(/content/images/backgrounds/bg4.jpg)"></div>
+      <div class="item" style="background-image:url(/content/images/backgrounds/bg5.jpeg)"></div>
     </div>
   </div>
 
@@ -13,7 +13,13 @@
     <div class="container">
       <nav class="navbar navbar-default navbar-static row">
         <div class="navbar-header col-md-2">
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#upperNavbar">
+                   <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#lowerNavbar">
                    <span class="sr-only">Toggle navigation</span>
                       <span class="icon-bar"></span>
                          <span class="icon-bar"></span>
@@ -30,8 +36,8 @@
                 <ul class="dropdown-menu">
                   <!-- Button trigger modal account -->
                   <!-- ADNOTATION - If token exist in localStorage user is authorized -->
-                  <li><a *ngIf="!localStorage?.token" role="button" data-toggle="modal" data-target="#accountModal">Login</a></li>
-                  <li><a *ngIf="localStorage?.token" (click)="logout($event)" role="button">Logout</a></li>
+                  <li><a *ngIf="accountService.tokenExpired()" role="button" data-toggle="modal" data-target="#accountModal">Login</a></li>
+                  <li><a *ngIf="!accountService.tokenExpired()" (click)="logout($event)" role="button">Logout</a></li>
                   <!-- Button trigger modal account -->
                   <li><a role="button" data-toggle="modal" data-target="#accountModal">Register</a></li>
                 </ul>
@@ -56,11 +62,11 @@
               <li>
                 <form id="custom-search-input" (ngSubmit)="search()" #searchForm="ngForm" novalidate>
                   <div class="input-group col-md-12">
-                    <input [(ngModel)]="paramWrapper.searchParameter" name="searchParameter" #searchParameter="ngModel" type="text" class="form-control"
+                    <input [(ngModel)]="param.searchParameter" name="searchParameter" #searchParameter="ngModel" type="text" class="form-control"
                       class="search-query form-control" placeholder="Search" />
                     <span class="input-group-btn">
                                     <button class="btn btn-danger" type="submit">
-                                        <span class=" glyphicon glyphicon-search"></span>
+                                        <span class="glyphicon glyphicon-search"></span>
                     </button>
                     </span>
                   </div>
@@ -151,7 +157,7 @@
           <a class="shopping-cart" routerLink="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
           <span>Shopping Cart</span>
           <br>
-          <span>{{ cartItemsCount }} item(s) - price {{ cartPrice }}$</span></a>
+          <span>{{ cartCount }} item(s) - price {{ cartPrice | currency:'EUR':true }}</span></a>
           <!-- /.nav-collapse -->
         </div>
       </nav>
