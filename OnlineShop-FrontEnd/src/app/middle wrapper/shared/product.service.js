@@ -15,6 +15,7 @@ require('rxjs/add/operator/catch');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/take');
 var app_settings_1 = require('../../app.settings');
+var product_1 = require('./product');
 var ProductService = (function () {
     function ProductService(httpService) {
         this.httpService = httpService;
@@ -22,40 +23,67 @@ var ProductService = (function () {
     ProductService.prototype.getProductsIdsBy = function (params) {
         // Jquery
         var queryString = $.param(params);
-        var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/products/ids/?' + queryString;
+        var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/product/ids/?' + queryString;
         return this.httpService.get(url)
             .map(this.extractMultipleData)
             .catch(this.handleError);
     };
     ProductService.prototype.getProductBy = function (id) {
-        var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/products/' + id.toString();
+        var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/product/' + id.toString();
         return this.httpService.get(url)
             .map(this.extractSingleData)
             .catch(this.handleError);
     };
     ProductService.prototype.getProductsBy = function (ids) {
-        var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/products/?ids=' + ids.toString();
+        var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/product/?ids=' + ids.toString();
         return this.httpService.get(url)
             .map(this.extractMultipleData)
             .catch(this.handleError);
     };
     ProductService.prototype.getNewProducts = function () {
-        return this.httpService.get(app_settings_1.AppSettings.API_ENDPOINT + '/api/products/new')
+        return this.httpService.get(app_settings_1.AppSettings.API_ENDPOINT + '/api/product/new')
             .map(this.extractMultipleData)
             .catch(this.handleError);
     };
     ProductService.prototype.getBestProducts = function () {
-        return this.httpService.get(app_settings_1.AppSettings.API_ENDPOINT + '/api/products/best')
+        return this.httpService.get(app_settings_1.AppSettings.API_ENDPOINT + '/api/product/best')
             .map(this.extractMultipleData)
             .catch(this.handleError);
     };
     ProductService.prototype.extractSingleData = function (res) {
-        var body = res.json();
-        return body || {};
+        var dto = res.json();
+        // TO DO: replace it by some libary
+        var p = new product_1.Product();
+        p.id = dto.Id;
+        p.name = dto.Name;
+        p.description = dto.Description;
+        p.details = dto.Details;
+        p.imagesUrl = dto.ImagesUrl;
+        p.price = dto.Price;
+        p.category = dto.Category;
+        p.target = dto.Target;
+        p.type = dto.Type;
+        return p || {};
     };
     ProductService.prototype.extractMultipleData = function (res) {
-        var body = res.json();
-        return body || [];
+        var dtos = res.json();
+        // TO DO: replace it by some libary
+        var ps = new Array();
+        for (var _i = 0, dtos_1 = dtos; _i < dtos_1.length; _i++) {
+            var dto = dtos_1[_i];
+            var p = new product_1.Product();
+            p.id = dto.Id;
+            p.name = dto.Name;
+            p.description = dto.Description;
+            p.details = dto.Details;
+            p.imagesUrl = dto.ImagesUrl;
+            p.price = dto.Price;
+            p.category = dto.Category;
+            p.target = dto.Target;
+            p.type = dto.Type;
+            ps.push(p);
+        }
+        return dtos || [];
     };
     ProductService.prototype.handleError = function (error) {
         var errMsg;

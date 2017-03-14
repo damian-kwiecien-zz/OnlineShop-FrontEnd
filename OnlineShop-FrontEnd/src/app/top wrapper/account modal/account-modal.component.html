@@ -1,6 +1,6 @@
 <!-- Modal -->
-<div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" 
-   data-keyboard="false" >
+<div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static"
+  data-keyboard="false">
   <div class="modal-dialog" role="document">
 
     <div class="form">
@@ -44,11 +44,11 @@
                 Password mismatch
               </small>
             </div>
-            <small>{{ registerResult }}</small>  
+            <small>{{ registerResult }}</small>
             <button [disabled]="!registerForm.form.valid" type="submit" class="button button-block">Get Started</button>
             <small [hidden]="registerForm.form.valid" class="text-danger">
                 Button disabled, check imput data
-            </small>        
+            </small>
           </form>
         </div>
 
@@ -59,8 +59,8 @@
 
             <div class="field-wrap">
               <label for="loginEmail">Email Address<span class="req">*</span></label>
-              <input id="loginEmail" (keyup)="onKeyup($event)" [(ngModel)]="loginModel.Email" name="loginEmail" #loginEmail="ngModel" type="email" 
-              autocomplete="off" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required />
+              <input id="loginEmail" (keyup)="onKeyup($event)" [(ngModel)]="loginModel.Email" name="loginEmail" #loginEmail="ngModel" type="email"
+                autocomplete="off" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required />
               <small [hidden]="loginEmail.valid || (loginEmail.pristine && !loginEmail.submitted)" class="text-danger">
                 Email is required and format should be <i>john@doe.com</i>.
               </small>
@@ -68,14 +68,14 @@
 
             <div class="field-wrap">
               <label for="loginPassword">Password<span class="req">*</span></label>
-              <input id="loginPassword" (keyup)="onKeyup($event)" [(ngModel)]="loginModel.Password" name="loginPassword" #loginPassword="ngModel" type="password" 
-              autocomplete="off" minlength="6" required />
+              <input id="loginPassword" (keyup)="onKeyup($event)" [(ngModel)]="loginModel.Password" name="loginPassword" #loginPassword="ngModel"
+                type="password" autocomplete="off" minlength="6" required />
               <small [hidden]="loginPassword.valid || (loginPassword.pristine && !loginPassword.submitted)" class="text-danger">
                 Password is required and minimum 6 length
               </small>
             </div>
             <p class="forgot"><a routerLink="/error">Forgot Password?</a></p>
-            <small>{{ loginResult }}</small>  
+            <small>{{ loginResult }}</small>
             <button [disabled]="!loginForm.form.valid" type="submit" class="button button-block">Log In</button>
             <small [hidden]="loginForm.form.valid" class="text-danger">
                 Button disabled, check imput data

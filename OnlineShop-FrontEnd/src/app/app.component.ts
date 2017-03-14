@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ShoppingCartService } from './core/shopping-cart.service';
+import { ShoppingCartService } from './shared/shopping-cart.service';
 import { AccountService } from './core/account.service';
 import { PostmanService } from './shared/postman.service';
 
@@ -7,7 +7,7 @@ import { PostmanService } from './shared/postman.service';
   selector: 'my-app',
   template: `
   <my-top-wrapper></my-top-wrapper>
-  <router-outlet></router-outlet>
+  <my-middle-wrapper></my-middle-wrapper>
   <my-bottom-wrapper></my-bottom-wrapper>`,
   styles: [`
   :host-context(html, body) {

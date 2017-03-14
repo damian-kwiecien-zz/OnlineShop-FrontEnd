@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import 'rxjs/add/operator/filter';
@@ -6,7 +6,7 @@ import 'rxjs/add/operator/filter';
 @Component({
   selector: 'my-sidebar',
   templateUrl: 'app/middle wrapper/sidebar/sidebar.component.html',
-  styles: 
+  styles:
   [`body {
   margin-top: 50px;
 }
@@ -34,13 +34,11 @@ export class SidebarComponent implements OnInit {
 
   private errorMessage: any;
 
-
-
   constructor(private router: Router) {
     this.heSelected = false;
     this.sheSelected = false;
     this.kidsSelected = false;
-   }
+  }
 
   ngOnInit(): void {
     this.router.events.filter(e => e instanceof NavigationEnd)

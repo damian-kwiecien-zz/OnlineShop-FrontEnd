@@ -19,7 +19,7 @@ var AccountService = (function () {
         this.http = http;
         this.authHttp = authHttp;
         this.SECOND_IN_DAYS = 0.0000115741;
-        this.EMPTY_TOKEN = {
+        this.NULL_TOKEN = {
             access_token: '',
             token_type: 'bearer',
             expires_in: 0,
@@ -43,10 +43,10 @@ var AccountService = (function () {
         }).catch(this.handleError);
     };
     AccountService.prototype.logout = function () {
-        this.setToken(this.EMPTY_TOKEN);
+        this.setToken(this.NULL_TOKEN);
     };
     AccountService.prototype.getToken = function () {
-        return JSON.parse(localStorage.getItem('token')) || this.EMPTY_TOKEN;
+        return JSON.parse(localStorage.getItem('token')) || this.NULL_TOKEN;
     };
     AccountService.prototype.tokenExpired = function () {
         var stringDate = this.getToken()[".expires"];
@@ -57,10 +57,12 @@ var AccountService = (function () {
             return false;
     };
     AccountService.prototype.isAuthenticated = function () {
-        if (this.tokenExpired())
-            return false;
-        else
-            return true;
+        return this.http.get(app_settings_1.AppSettings.API_ENDPOINT + '/api/account/isauthenticated')
+            .map(function (res) { return res.json(); });
+    };
+    AccountService.prototype.isAuthenticatedAsAdmin = function () {
+        return this.http.get(app_settings_1.AppSettings.API_ENDPOINT + '/api/account/isauthenticatedasadmin')
+            .map(function (res) { return res.json(); });
     };
     AccountService.prototype.expirationInDays = function () {
         return this.getToken().expires_in * this.SECOND_IN_DAYS;
@@ -85,10 +87,4 @@ var AccountService = (function () {
     return AccountService;
 }());
 exports.AccountService = AccountService;
-/*
-    private isEmpty(obj: Object) {
-        for (var x in obj) { if (obj.hasOwnProperty(x)) return false; }
-        return true;
-    }
-*/ 
 //# sourceMappingURL=account.service.js.map

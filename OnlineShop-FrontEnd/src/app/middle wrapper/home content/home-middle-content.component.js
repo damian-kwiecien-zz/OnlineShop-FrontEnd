@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var product_service_1 = require('../shared/product.service');
-var shopping_cart_service_1 = require('../../core/shopping-cart.service');
+var shopping_cart_service_1 = require('../../shared/shopping-cart.service');
 require('rxjs/add/operator/take');
 var HomeMiddleContentComponent = (function () {
     function HomeMiddleContentComponent(productService, cartService) {

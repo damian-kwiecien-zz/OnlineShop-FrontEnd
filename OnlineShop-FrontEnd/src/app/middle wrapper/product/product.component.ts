@@ -2,20 +2,20 @@ import { Component, OnInit, AfterViewInit, EventEmitter, Input, Output } from '@
 import { Router } from '@angular/router';
 import { ProductService } from '../shared/product.service';
 import { Product } from '../shared/product';
-import { ShoppingCartService } from '../../core/shopping-cart.service';
+import { ShoppingCartService } from '../../shared/shopping-cart.service';
 
 @Component({
   selector: 'my-product',
-  template:`
+  template: `
   <div class="thumbnail">
-        <img class="img-responsive" src="{{ product?.ProductImages[0]?.ImgUrl }}" alt="Image not found" data-toggle="modal" [attr.data-target]="'#'+id" (click)="sendProductToParent()">
+        <img class="img-responsive" src="{{ product?.imagesUrl[0] }}" alt="Image not found" data-toggle="modal" [attr.data-target]="'#'+id" (click)="sendProductToParent()">
         <div class="caption">
-          <h3>{{ product?.Name }}</h3>
-          <p>{{ product?.Price }}</p>
+          <h3>{{ product?.name }}</h3>
+          <p>{{ product?.price }}</p>
           <p><button (click)="addToCart($event)" class="btn btn-danger" role="button">Add To Cart</button></p>
         </div>
       </div>`,
-      styles: [`
+  styles: [`
         img {
     height: 40vh;
    }
@@ -30,9 +30,9 @@ export class ProductComponent {
 
   constructor(private cartService: ShoppingCartService) { }
 
-    addToCart(event: any) {
-      this.cartService.addProduct(this.product);
-    }
+  addToCart(event: any) {
+    this.cartService.addProduct(this.product);
+  }
 
   sendProductToParent() {
     this.selectProduct.emit(this.product);

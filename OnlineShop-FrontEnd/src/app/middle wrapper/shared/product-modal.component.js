@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var product_1 = require('./product');
-var shopping_cart_service_1 = require('../../core/shopping-cart.service');
+var shopping_cart_service_1 = require('../../shared/shopping-cart.service');
 var ProductModalComponent = (function () {
     function ProductModalComponent(cartService) {
         this.cartService = cartService;

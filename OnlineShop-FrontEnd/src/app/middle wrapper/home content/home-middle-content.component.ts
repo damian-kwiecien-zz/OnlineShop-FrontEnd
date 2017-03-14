@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ProductService } from '../shared/product.service';
-import { ShoppingCartService } from '../../core/shopping-cart.service';
+import { ShoppingCartService } from '../../shared/shopping-cart.service';
 import { ProductComponent } from '../product/product.component'
 import { ProductModalComponent } from '../shared/product-modal.component'
 import { Product } from '../shared/product';
@@ -27,7 +27,7 @@ export class HomeMiddleContentComponent implements OnInit {
   bestProducts: Product[];
   selectedProduct: Product;
   modalId: string = "homeModal";
-  
+
   private errorMessage: any;
 
   constructor(private productService: ProductService, private cartService: ShoppingCartService) { }
@@ -47,7 +47,7 @@ export class HomeMiddleContentComponent implements OnInit {
   addToCart(event: any) {
     this.cartService.addProduct(this.selectedProduct);
   }
-      raiseModal(product: Product) {
+  raiseModal(product: Product) {
     this.selectedProduct = product;
   }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AccountService } from '../core/account.service';
-import { ShoppingCartService } from '../core/shopping-cart.service';
+import { ShoppingCartService } from '../shared/shopping-cart.service';
 import { PostmanService } from '../shared/postman.service';
 
 @Component({
@@ -15,7 +15,8 @@ export class TopWrapperComponent implements OnInit {
   cartCount: number;
   cartPrice: number;
 
-  constructor(private accountService: AccountService, private postman: PostmanService, private router: Router, private cartService: ShoppingCartService) {
+  constructor(private accountService: AccountService, private postman: PostmanService, private router: Router,
+    private cartService: ShoppingCartService) {
     this.cartCount = 0;
     this.cartPrice = 0;
     this.param = { searchParameter: '' };
@@ -28,7 +29,7 @@ export class TopWrapperComponent implements OnInit {
     // Resizes main navbar right part to proper size
     $('.navbar').find('.navbar-right').css('height', $('.navbar').innerHeight());
     // Resizes shopping cart part to proper size
-     $('.navbar-right').find('.shopping-cart').css('width', $('.navbar-right').innerHeight());
+    $('.navbar-right').find('.shopping-cart').css('width', $('.navbar-right').innerHeight());
     $('#myCarousel').carousel({
       pause: 'null',
       interval: 3000

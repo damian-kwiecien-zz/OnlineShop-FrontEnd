@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ProductService } from '../shared/product.service';
 import { Product } from '../shared/product';
-import { ShoppingCartService } from '../../core/shopping-cart.service';
+import { ShoppingCartService } from '../../shared/shopping-cart.service';
 import { PostmanService } from '../../shared/postman.service';
 
 import { EmptyResultComponent } from '../shared/empty-result.component';
@@ -23,13 +23,13 @@ export class SearchContentComponent implements OnInit {
   productsIds: number[];
   selectedProduct: Product;
   empty: boolean;
-    modalId: string = "searchModal";
+  modalId: string = "searchModal";
 
   private param: { searchParameter: string };
   private errorMessage: any;
 
-  constructor(private productService: ProductService, private postman: PostmanService, private cartService: ShoppingCartService, 
-  private router: Router, private cd: ChangeDetectorRef) {
+  constructor(private productService: ProductService, private postman: PostmanService, private cartService: ShoppingCartService,
+    private router: Router, private cd: ChangeDetectorRef) {
     this.products = [];
     this.param = { searchParameter: '' };
     this.empty = true;
@@ -38,8 +38,8 @@ export class SearchContentComponent implements OnInit {
   ngOnInit() {
     this.postman.getSearchParam()
       .subscribe(
-        (param: string) => { this.param.searchParameter = param; this.prepareProductsIds(); },
-        error => { this.errorMessage = error as any; });
+      (param: string) => { this.param.searchParameter = param; this.prepareProductsIds(); },
+      error => { this.errorMessage = error as any; });
   }
 
   addToCart(event: any) {
@@ -60,26 +60,27 @@ export class SearchContentComponent implements OnInit {
     }
   }
 
-
   private prepareProductsIds() {
     this.productService.getProductsIdsBy(this.param)
       .subscribe(
       (ids: number[]) => {
         this.productsIds = ids;
-        this.fillProducts(8); },
+        this.fillProducts(8);
+      },
       error => this.errorMessage = <any>error,
-      () => { 
+      () => {
         if (this.productsIds.length != 0)
           this.empty = false;
         else
-          this.empty = true; 
-        this.cd.detectChanges(); });
+          this.empty = true;
+        this.cd.detectChanges();
+      });
   }
 
   private fillProducts(count: number) {
     if (this.productsIds.length == 0)
       return;
-      
+
     if (this.productsIds.length < count)
       count = this.productsIds.length;
 

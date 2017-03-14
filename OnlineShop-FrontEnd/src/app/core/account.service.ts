@@ -16,7 +16,7 @@ export class AccountService {
 
     private readonly SECOND_IN_DAYS: number = 0.0000115741;
 
-    private readonly EMPTY_TOKEN: Token = {
+    private readonly NULL_TOKEN: Token = {
         access_token: '',
         token_type: 'bearer',
         expires_in: 0,
@@ -46,11 +46,11 @@ export class AccountService {
     }
 
     logout() {
-        this.setToken(this.EMPTY_TOKEN);
+        this.setToken(this.NULL_TOKEN);
     }
 
     getToken() {
-        return JSON.parse(localStorage.getItem('token')) as Token || this.EMPTY_TOKEN;
+        return JSON.parse(localStorage.getItem('token')) as Token || this.NULL_TOKEN;
     }
 
     tokenExpired(): boolean {
@@ -63,12 +63,17 @@ export class AccountService {
             return false;
     }
 
+
     isAuthenticated() {
-        if (this.tokenExpired())
-            return false;
-        else
-            return true;
+        return this.http.get(AppSettings.API_ENDPOINT + '/api/account/isauthenticated')
+            .map(res => res.json() as boolean);
     }
+
+    isAuthenticatedAsAdmin() {
+        return this.http.get(AppSettings.API_ENDPOINT + '/api/account/isauthenticatedasadmin')
+            .map(res => res.json() as boolean);
+    }
+
 
     expirationInDays(): number {
         return this.getToken().expires_in * this.SECOND_IN_DAYS;
@@ -86,16 +91,7 @@ export class AccountService {
     }
 
     private handleError(error: Response) {
-    let err: Object = error.json() as Object;
-    return Observable.throw(err as Object);
-  }
-}
-
-
-
-/*
-    private isEmpty(obj: Object) {
-        for (var x in obj) { if (obj.hasOwnProperty(x)) return false; }
-        return true;
+        let err: Object = error.json() as Object;
+        return Observable.throw(err as Object);
     }
-*/
+}

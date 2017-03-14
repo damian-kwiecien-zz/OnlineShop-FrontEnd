@@ -1,24 +1,13 @@
-import { ProductImages } from './product-images';
-
 export class Product {
-        Id: number;
-
-        Name: string;
-
-        Price: number;
-
-        Description: string;
-
-        Details: string;
-
-        ImgUrl: string;
-
-        Target: string;
-
-        Category: string;
-
-        Type: string;
-
-        ProductImages: ProductImages[];
+        id: number;
+        name: string;
+        price: number;
+        description: string;
+        details: string;
+        imgUrl: string;
+        target: string;
+        category: string;
+        type: string;
+        imagesUrl: string[];
 }
 

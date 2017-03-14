@@ -5,7 +5,7 @@ import { Product } from '../shared/product';
 import { ProductComponent } from '../product/product.component'
 
 import { ProductService } from '../shared/product.service';
-import { ShoppingCartService } from '../../core/shopping-cart.service';
+import { ShoppingCartService } from '../../shared/shopping-cart.service';
 
 @Component({
   selector: 'my-middle-content',

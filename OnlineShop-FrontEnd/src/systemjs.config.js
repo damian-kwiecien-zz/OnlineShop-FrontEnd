@@ -43,8 +43,6 @@
         jquery: {
           defaultExtension: 'js'
         }
-  
-      
     }
   });
 })(this);

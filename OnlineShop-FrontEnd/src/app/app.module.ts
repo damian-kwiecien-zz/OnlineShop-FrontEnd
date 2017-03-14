@@ -5,25 +5,27 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthModule } from './core/auth.module'
 
+import { TopWrapperModule } from './top wrapper/top-wrapper.module';
+import { MiddleWrapperModule } from './middle wrapper/middle-wrapper.module';
+import { BottomWrapperModule } from './bottom wrapper/bottom-wrapper.module';
+
 import { AppComponent } from './app.component';
-import { TopWrapperComponent } from './top wrapper/top-wrapper.component';
-import { MiddleWrapperComponent } from './middle wrapper/middle-wrapper.component';
-import { BottomWrapperComponent } from './bottom wrapper/bottom-wrapper.component';
-
-import { HomeMiddleContentComponent } from './middle wrapper/home content/home-middle-content.component';
-import { MiddleContentComponent } from './middle wrapper/main content/middle-content.component';
-import { ShoppingCartComponent } from './middle wrapper/shopping cart/shopping-cart.component';
-import { SearchContentComponent } from './middle wrapper/search content/search-content.component';
-
-import { AccountModal } from './top wrapper/account modal/account-modal.component'
-import { ProductComponent } from './middle wrapper/product/product.component';
-import { SidebarComponent } from './middle wrapper/sidebar/sidebar.component';
-import { EmptyResultComponent } from './middle wrapper/shared/empty-result.component';
-import { ProductModalComponent } from './middle wrapper/shared/product-modal.component';
 
 import { EqualValidator } from './core/equal-validator.directive';
+import { AdminAuthGuard } from './core/admin-auth-guard';
 
 
+@NgModule({
+  imports: [BrowserModule, HttpModule, JsonpModule, FormsModule, AuthModule,
+    TopWrapperModule, MiddleWrapperModule, BottomWrapperModule],
+  declarations: [AppComponent, EqualValidator],
+  //entryComponents: [ProductComponent],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+/*
 const routes: Routes = [{
   path: '',
   component: MiddleWrapperComponent,
@@ -32,8 +34,20 @@ const routes: Routes = [{
     component: HomeMiddleContentComponent
   },
   {
-    path: 'cart',
-    component: ShoppingCartComponent
+    path: 'purchase',
+    component: PurchaseComponent,
+    children: [{
+      path: 'cart',
+      component: ShoppingCartComponent
+    },
+    {
+      path: 'purchaser',
+      component: PurchaserComponent
+    },
+    {
+      path: 'confirmation',
+      component: ConfirmationComponent
+    }]
   },
   {
     path: 'search',
@@ -176,18 +190,18 @@ const routes: Routes = [{
   }
   ]
 },
-{ 
-  path: '**', 
-  redirectTo:'', 
-  pathMatch: 'full' 
-}];
+{
+  path: 'admin',
+  children: [{
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AdminAuthGuard]
 
-@NgModule({
-  imports: [BrowserModule, HttpModule, JsonpModule, RouterModule.forRoot(routes), FormsModule, AuthModule],
-  declarations: [AppComponent, TopWrapperComponent, MiddleWrapperComponent, BottomWrapperComponent,
-    MiddleContentComponent, HomeMiddleContentComponent, ShoppingCartComponent, AccountModal, SearchContentComponent,
-    EmptyResultComponent, SidebarComponent, ProductComponent, EqualValidator, ProductModalComponent],
-  entryComponents: [ProductComponent],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
+  }]
+},
+{
+  path: '**',
+  redirectTo: '',
+  pathMatch: 'full'
+}];
+*/

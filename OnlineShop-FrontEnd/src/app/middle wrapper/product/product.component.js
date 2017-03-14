@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var product_1 = require('../shared/product');
-var shopping_cart_service_1 = require('../../core/shopping-cart.service');
+var shopping_cart_service_1 = require('../../shared/shopping-cart.service');
 var ProductComponent = (function () {
     function ProductComponent(cartService) {
         this.cartService = cartService;
@@ -37,7 +37,7 @@ var ProductComponent = (function () {
     ProductComponent = __decorate([
         core_1.Component({
             selector: 'my-product',
-            template: "\n  <div class=\"thumbnail\">\n        <img class=\"img-responsive\" src=\"{{ product?.ProductImages[0]?.ImgUrl }}\" alt=\"Image not found\" data-toggle=\"modal\" [attr.data-target]=\"'#'+id\" (click)=\"sendProductToParent()\">\n        <div class=\"caption\">\n          <h3>{{ product?.Name }}</h3>\n          <p>{{ product?.Price }}</p>\n          <p><button (click)=\"addToCart($event)\" class=\"btn btn-danger\" role=\"button\">Add To Cart</button></p>\n        </div>\n      </div>",
+            template: "\n  <div class=\"thumbnail\">\n        <img class=\"img-responsive\" src=\"{{ product?.imagesUrl[0] }}\" alt=\"Image not found\" data-toggle=\"modal\" [attr.data-target]=\"'#'+id\" (click)=\"sendProductToParent()\">\n        <div class=\"caption\">\n          <h3>{{ product?.name }}</h3>\n          <p>{{ product?.price }}</p>\n          <p><button (click)=\"addToCart($event)\" class=\"btn btn-danger\" role=\"button\">Add To Cart</button></p>\n        </div>\n      </div>",
             styles: ["\n        img {\n    height: 40vh;\n   }\n   .caption {\n     text-align: center;\n   }"]
         }), 
         __metadata('design:paramtypes', [shopping_cart_service_1.ShoppingCartService])

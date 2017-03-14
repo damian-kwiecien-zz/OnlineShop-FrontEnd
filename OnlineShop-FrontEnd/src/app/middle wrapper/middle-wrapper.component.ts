@@ -35,10 +35,10 @@ export class MiddleWrapperComponent implements AfterViewChecked {
     this.setMiddleBackgroundHeightLikeMiddleContentHeight();
   }
 
-    // Jquery
+  // Jquery
   // Without it background will have wrong height
   private setMiddleBackgroundHeightLikeMiddleContentHeight() {
-    $(function() { $('.middle-background').css('min-height', $('.middle-content').outerHeight(true))});
+    $(function () { $('.middle-background').css('min-height', $('.middle-content').outerHeight(true)) });
   }
 
- }
+}

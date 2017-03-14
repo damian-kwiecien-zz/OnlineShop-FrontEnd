@@ -1,13 +1,13 @@
 <div class="container">
-  
+
   <div class="page-header">
     <h1>New Collection <span class="label label-primary">New</span></h1>
   </div>
   <div class="row">
     <div *ngFor="let p of newProducts" class="col-sm-6 col-md-4">
       <my-product [product]="p" [id]="modalId" (selectProduct)='raiseModal($event)'> </my-product>
-      </div>
     </div>
+  </div>
 
   <div class="page-header">
     <h1>Most Popular <span class="label label-default">Best</span></h1>
@@ -15,9 +15,9 @@
   <div class="row">
     <div *ngFor="let p of bestProducts" class="col-sm-6 col-md-4">
       <my-product [product]="p" [id]="modalId" (selectProduct)='raiseModal($event)'> </my-product>
-      </div>
     </div>
-
   </div>
+
+</div>
 
 <my-product-modal [id]="modalId" [product]="selectedProduct"></my-product-modal>

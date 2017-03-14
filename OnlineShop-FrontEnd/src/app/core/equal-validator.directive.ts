@@ -15,7 +15,7 @@ export class EqualValidator implements Validator {
 
     private get isReverse() {
         if (!this.reverse) return false;
-        return this.reverse === 'true' ? true: false;
+        return this.reverse === 'true' ? true : false;
     }
 
     validate(c: AbstractControl): { [key: string]: any } {
@@ -27,9 +27,9 @@ export class EqualValidator implements Validator {
 
         // value not equal
         if (e && v !== e.value && !this.isReverse) {
-          return {
-            validateEqual: false
-          }
+            return {
+                validateEqual: false
+            }
         }
 
         // value equal and reverse
