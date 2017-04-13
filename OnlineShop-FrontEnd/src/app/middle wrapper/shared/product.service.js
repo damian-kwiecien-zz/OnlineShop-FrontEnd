@@ -20,37 +20,37 @@ var ProductService = (function () {
     function ProductService(httpService) {
         this.httpService = httpService;
     }
-    ProductService.prototype.getProductsIdsBy = function (params) {
+    ProductService.prototype.getProductsIdsBy = function (arg) {
         // Jquery
-        var queryString = $.param(params);
+        var queryString = $.param(arg);
         var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/product/ids/?' + queryString;
         return this.httpService.get(url)
-            .map(this.extractMultipleData)
+            .map(this.extractDatas)
             .catch(this.handleError);
     };
     ProductService.prototype.getProductBy = function (id) {
         var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/product/' + id.toString();
         return this.httpService.get(url)
-            .map(this.extractSingleData)
+            .map(this.extractProduct)
             .catch(this.handleError);
     };
     ProductService.prototype.getProductsBy = function (ids) {
         var url = app_settings_1.AppSettings.API_ENDPOINT + '/api/product/?ids=' + ids.toString();
         return this.httpService.get(url)
-            .map(this.extractMultipleData)
+            .map(this.extractProducts)
             .catch(this.handleError);
     };
     ProductService.prototype.getNewProducts = function () {
         return this.httpService.get(app_settings_1.AppSettings.API_ENDPOINT + '/api/product/new')
-            .map(this.extractMultipleData)
+            .map(this.extractProducts)
             .catch(this.handleError);
     };
     ProductService.prototype.getBestProducts = function () {
         return this.httpService.get(app_settings_1.AppSettings.API_ENDPOINT + '/api/product/best')
-            .map(this.extractMultipleData)
+            .map(this.extractProducts)
             .catch(this.handleError);
     };
-    ProductService.prototype.extractSingleData = function (res) {
+    ProductService.prototype.extractProduct = function (res) {
         var dto = res.json();
         // TO DO: replace it by some libary
         var p = new product_1.Product();
@@ -65,7 +65,7 @@ var ProductService = (function () {
         p.type = dto.Type;
         return p || {};
     };
-    ProductService.prototype.extractMultipleData = function (res) {
+    ProductService.prototype.extractProducts = function (res) {
         var dtos = res.json();
         // TO DO: replace it by some libary
         var ps = new Array();
@@ -83,7 +83,10 @@ var ProductService = (function () {
             p.type = dto.Type;
             ps.push(p);
         }
-        return dtos || [];
+        return ps || [];
+    };
+    ProductService.prototype.extractDatas = function (res) {
+        return res.json() || [];
     };
     ProductService.prototype.handleError = function (error) {
         var errMsg;
@@ -98,6 +101,11 @@ var ProductService = (function () {
         console.error(errMsg);
         return Observable_1.Observable.throw(errMsg);
     };
+    ProductService.prototype.lowerJSONKeysFirstLetter = function (json) {
+        return json.replace(/"(.)[\w]+":/g, function ($0) {
+            return $0.substr(1, 1).toLowerCase() + $0.substr(2);
+        });
+    };
     ProductService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
@@ -105,6 +113,14 @@ var ProductService = (function () {
     return ProductService;
 }());
 exports.ProductService = ProductService;
+/*
+var json='{"ID":1234, ".oNTENT":"HELLO"}';
+document.write(json.replace(/"(.)[\w]+":/g, function($0){
+$0 = $0.substr(1, 1).toLowerCase()  + $0.substr(2);
+
+return $0 }));
+ 
+*/
 /*
   public getProductBy(paramWrapper: { id: number } | { idList: number[] }): Observable<Product[]> {
       if (this.compareKeys(paramWrapper, ['id']))

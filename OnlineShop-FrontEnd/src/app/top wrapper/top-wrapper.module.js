@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var forms_1 = require('@angular/forms');
+var router_1 = require('@angular/router');
 var top_wrapper_component_1 = require('./top-wrapper.component');
 var account_modal_component_1 = require('./account modal/account-modal.component');
 var TopWrapperModule = (function () {
@@ -18,7 +19,7 @@ var TopWrapperModule = (function () {
     }
     TopWrapperModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, forms_1.FormsModule],
+            imports: [common_1.CommonModule, forms_1.FormsModule, router_1.RouterModule],
             declarations: [top_wrapper_component_1.TopWrapperComponent, account_modal_component_1.AccountModal],
             exports: [top_wrapper_component_1.TopWrapperComponent]
         }), 

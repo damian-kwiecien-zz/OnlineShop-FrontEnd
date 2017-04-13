@@ -42,12 +42,15 @@ export class ShoppingCartService {
   getItems(): ShoppingCartItem[] {
     return JSON.parse(localStorage.getItem('shoppingCartItems')) as ShoppingCartItem[] || []
   }
-
-  addProduct(param: Product | { productId: number }) {
-    if (Object.keys(param).sort().join() === "Category,Description,Details,Id,Name,Price,ProductImages,Target,Type")
-      this.addProduct_1(param as Product);
+  addProduct(product: Object);
+  addProduct(product: Product);
+  addProduct(id: number);
+  addProduct(arg: any) {
+    if (Object.keys(arg).sort().join() === "Category,Description,Details,Id,Name,Price,ProductImages,Target,Type")
+      this.addProduct_1(arg as Product);
     else
-      this.addProduct_2(param as { productId: number });
+      this.addProduct_2(arg as { productId: number });
+
   }
 
   private addProduct_1(param: Product) {
@@ -101,7 +104,7 @@ export class ShoppingCartService {
       product.name,
       product.price,
       1,
-      product.productImages[0].ImgUrl);
+      product.imgUrl);
   }
 
   private setItems(cartItems: ShoppingCartItem[]): void {

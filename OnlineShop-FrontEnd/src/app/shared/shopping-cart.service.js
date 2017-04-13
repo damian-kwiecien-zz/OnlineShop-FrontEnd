@@ -39,11 +39,11 @@ var ShoppingCartService = (function () {
     ShoppingCartService.prototype.getItems = function () {
         return JSON.parse(localStorage.getItem('shoppingCartItems')) || [];
     };
-    ShoppingCartService.prototype.addProduct = function (param) {
-        if (Object.keys(param).sort().join() === "Category,Description,Details,Id,Name,Price,ProductImages,Target,Type")
-            this.addProduct_1(param);
+    ShoppingCartService.prototype.addProduct = function (arg) {
+        if (Object.keys(arg).sort().join() === "Category,Description,Details,Id,Name,Price,ProductImages,Target,Type")
+            this.addProduct_1(arg);
         else
-            this.addProduct_2(param);
+            this.addProduct_2(arg);
     };
     ShoppingCartService.prototype.addProduct_1 = function (param) {
         var cartItems = this.getItems();
@@ -83,7 +83,7 @@ var ShoppingCartService = (function () {
         }
     };
     ShoppingCartService.prototype.createItem = function (product) {
-        return new shopping_cart_item_1.ShoppingCartItem(product.id, product.name, product.price, 1, product.productImages[0].ImgUrl);
+        return new shopping_cart_item_1.ShoppingCartItem(product.id, product.name, product.price, 1, product.imgUrl);
     };
     ShoppingCartService.prototype.setItems = function (cartItems) {
         localStorage.setItem('shoppingCartItems', JSON.stringify(cartItems));

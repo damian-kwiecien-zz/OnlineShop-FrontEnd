@@ -16,13 +16,17 @@ export class ProductService {
 
   constructor(private httpService: Http) { }
 
-  getProductsIdsBy(params: { target: string, category: string, type: string } | { searchParameter: string }): Observable<number[]> {
+  getProductsIdsBy(params: { target: string, category: string, type: string }): Observable<number[]>;
+
+  getProductsIdsBy(param: { searchParameter: string }): Observable<number[]>;
+
+  getProductsIdsBy(arg: Object): Observable<number[]> {
     // Jquery
-    let queryString = $.param(params);
+    let queryString = $.param(arg);
 
     let url = AppSettings.API_ENDPOINT + '/api/product/ids/?' + queryString;
     return this.httpService.get(url)
-      .map(this.extractMultipleData)
+      .map(this.extractDatas)
       .catch(this.handleError);
   }
 
@@ -30,30 +34,30 @@ export class ProductService {
   getProductBy(id: number): Observable<Product> {
     let url = AppSettings.API_ENDPOINT + '/api/product/' + id.toString();
     return this.httpService.get(url)
-      .map(this.extractSingleData)
+      .map(this.extractProduct)
       .catch(this.handleError);
   }
 
   getProductsBy(ids: number[]): Observable<Product[]> {
     let url = AppSettings.API_ENDPOINT + '/api/product/?ids=' + ids.toString();
     return this.httpService.get(url)
-      .map(this.extractMultipleData)
+      .map(this.extractProducts)
       .catch(this.handleError);
   }
 
   getNewProducts(): Observable<Product[]> {
     return this.httpService.get(AppSettings.API_ENDPOINT + '/api/product/new')
-      .map(this.extractMultipleData)
+      .map(this.extractProducts)
       .catch(this.handleError);
   }
 
   getBestProducts(): Observable<Product[]> {
     return this.httpService.get(AppSettings.API_ENDPOINT + '/api/product/best')
-      .map(this.extractMultipleData)
+      .map(this.extractProducts)
       .catch(this.handleError);
   }
 
-  private extractSingleData(res: Response) {
+  private extractProduct(res: Response) {
     let dto = res.json() as ProductDTO;
 
     // TO DO: replace it by some libary
@@ -70,7 +74,7 @@ export class ProductService {
     return p || {};
   }
 
-  private extractMultipleData(res: Response) {
+  private extractProducts(res: Response) {
     let dtos = res.json() as ProductDTO[];
 
     // TO DO: replace it by some libary
@@ -88,7 +92,11 @@ export class ProductService {
       p.type = dto.Type;
       ps.push(p);
     }   
-    return dtos || [];
+    return ps || [];
+  }
+
+    private extractDatas(res: Response) {
+    return res.json() || []
   }
 
   private handleError(error: Response | any) {
@@ -103,10 +111,22 @@ export class ProductService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
+
+  private lowerJSONKeysFirstLetter(json: string): string {
+    return json.replace(/"(.)[\w]+":/g, ($0: string) => {
+      return $0.substr(1, 1).toLowerCase() + $0.substr(2)
+    });
+  }
 }
 
+/*
+var json='{"ID":1234, ".oNTENT":"HELLO"}';
+document.write(json.replace(/"(.)[\w]+":/g, function($0){
+$0 = $0.substr(1, 1).toLowerCase()  + $0.substr(2);
 
-
+return $0 }));
+ 
+*/
 
 
 /*
