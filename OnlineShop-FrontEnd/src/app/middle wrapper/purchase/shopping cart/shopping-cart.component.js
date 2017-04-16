@@ -27,7 +27,7 @@ var ShoppingCartComponent = (function () {
     };
     ShoppingCartComponent.prototype.increaseQuantity = function (item, event) {
         ++event.target.nextElementSibling.nextElementSibling.value;
-        this.cartService.addProduct({ productId: item.id });
+        this.cartService.addProduct(item.id);
         this.cartItems = this.cartService.getItems();
         this.prepareSubtotalPrice();
     };

@@ -32,13 +32,13 @@ export class ShoppingCartComponent implements OnInit {
 
   increaseQuantity(item: ShoppingCartItem, event: any) {
     ++event.target.nextElementSibling.nextElementSibling.value;
-    this.cartService.addProduct({ productId: item.id });
+    this.cartService.addProduct(item.id);
     this.cartItems = this.cartService.getItems();
     this.prepareSubtotalPrice();
   }
   decreaseQuantity(item: ShoppingCartItem, event: any) {
     --event.target.nextElementSibling.value;
-    this.cartService.removeItemBy(item.id)
+    this.cartService.removeItemBy(item.id);
     this.cartItems = this.cartService.getItems();
     this.prepareSubtotalPrice();
   }

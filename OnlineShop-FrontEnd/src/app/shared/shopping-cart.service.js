@@ -40,17 +40,17 @@ var ShoppingCartService = (function () {
         return JSON.parse(localStorage.getItem('shoppingCartItems')) || [];
     };
     ShoppingCartService.prototype.addProduct = function (arg) {
-        if (Object.keys(arg).sort().join() === "Category,Description,Details,Id,Name,Price,ProductImages,Target,Type")
-            this.addProduct_1(arg);
+        if (typeof (arg) == "number")
+            this.addProductOverload2(arg);
         else
-            this.addProduct_2(arg);
+            this.addProductOverload1(arg);
     };
-    ShoppingCartService.prototype.addProduct_1 = function (param) {
+    ShoppingCartService.prototype.addProductOverload1 = function (product) {
         var cartItems = this.getItems();
-        var i = cartItems.findIndex(function (item) { return item.id == param.id; });
+        var i = cartItems.findIndex(function (item) { return item.id == product.id; });
         // Means item not found, so we create one
         if (i == -1) {
-            var cartItem = this.createItem(param);
+            var cartItem = this.createItem(product);
             cartItems.push(cartItem);
             this.setItems(cartItems);
         }
@@ -58,11 +58,11 @@ var ShoppingCartService = (function () {
             ++(cartItems[i].quantity);
             this.setItems(cartItems);
         }
-        this.emitProductAddedEvent(param.price);
+        this.emitProductAddedEvent(product.price);
     };
-    ShoppingCartService.prototype.addProduct_2 = function (param) {
+    ShoppingCartService.prototype.addProductOverload2 = function (id) {
         var cartItems = this.getItems();
-        var i = cartItems.findIndex(function (item) { return item.id == param.productId; });
+        var i = cartItems.findIndex(function (item) { return item.id == id; });
         // i == -1 throw error
         ++(cartItems[i].quantity);
         this.setItems(cartItems);

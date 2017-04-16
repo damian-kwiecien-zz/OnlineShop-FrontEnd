@@ -42,24 +42,25 @@ export class ShoppingCartService {
   getItems(): ShoppingCartItem[] {
     return JSON.parse(localStorage.getItem('shoppingCartItems')) as ShoppingCartItem[] || []
   }
-  addProduct(product: Object);
+  //addProduct(product: Object);
   addProduct(product: Product);
   addProduct(id: number);
   addProduct(arg: any) {
-    if (Object.keys(arg).sort().join() === "Category,Description,Details,Id,Name,Price,ProductImages,Target,Type")
-      this.addProduct_1(arg as Product);
+    if (typeof(arg) as string  == "number")
+      this.addProductOverload2(arg as number);
     else
-      this.addProduct_2(arg as { productId: number });
+      this.addProductOverload1(arg as Product);
+      
 
   }
 
-  private addProduct_1(param: Product) {
+  private addProductOverload1(product: Product) {
     let cartItems = this.getItems();
-    let i = cartItems.findIndex(item => item.id == param.id);
+    let i = cartItems.findIndex(item => item.id == product.id);
 
     // Means item not found, so we create one
     if (i == -1) {
-      let cartItem = this.createItem(param);
+      let cartItem = this.createItem(product);
       cartItems.push(cartItem);
       this.setItems(cartItems);
     }
@@ -68,12 +69,12 @@ export class ShoppingCartService {
       ++(cartItems[i].quantity);
       this.setItems(cartItems);
     }
-    this.emitProductAddedEvent(param.price);
+    this.emitProductAddedEvent(product.price);
   }
 
-  private addProduct_2(param: { productId: number }) {
+  private addProductOverload2(id: number) {
     let cartItems = this.getItems();
-    let i = cartItems.findIndex(item => item.id == param.productId);
+    let i = cartItems.findIndex(item => item.id == id);
     // i == -1 throw error
     ++(cartItems[i].quantity);
     this.setItems(cartItems);

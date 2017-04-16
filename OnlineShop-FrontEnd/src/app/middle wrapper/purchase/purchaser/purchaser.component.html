@@ -1,109 +1,110 @@
-<form (ngSubmit)="purchase()" #purchaseForm="ngForm" novalidate>
+<div class="container">
+  <div class="row">
 
-  <div class="form-group">
-    <label for="name">Name</label>
-    <br />
-    <input id="name" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.name" name="name" #name="ngModel" type="text" autocomplete="off"
-      required />
-    <small [hidden]="name.valid || (name.pristine && !purchaseForm.submitted)" class="text-danger">
+    <form (ngSubmit)="purchase()" #purchaseForm="ngForm" novalidate>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <br />
+        <input id="name" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.name" name="name" #name="ngModel" type="text" autocomplete="off"
+          required />
+        <small [hidden]="name.valid || (name.pristine && !purchaseForm.submitted)" class="text-danger">
+                Name is required.
+              </small>
+      </div>
+
+      <div class="form-group">
+        <label for="surname">Surname</label>
+        <br />
+        <input id="surname" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.surname" name="surname" #surname="ngModel" type="text"
+          autocomplete="off" required />
+        <small [hidden]="surname.valid || (surname.pristine && !purchaseForm.submitted)" class="text-danger">
+                Surname is required.
+              </small>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <br />
+        <input id="phone" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.phone" name="phone" #phone="ngModel" type="number" autocomplete="off"
+          min="0" max="999999999" required />
+        <small [hidden]="phone.valid || (phone.pristine && !purchaseForm.submitted)" class="text-danger">
+                Phone is required and format should be <i>123456789</i>.
+              </small>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <br />
+        <input id="email" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.Email" name="email" #email="ngModel" type="email"
+          autocomplete="off" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required />
+        <small [hidden]="email.valid || (email.pristine && !purchaseForm.submitted)" class="text-danger">
                 Email is required and format should be <i>john@doe.com</i>.
               </small>
-  </div>
+      </div>
 
-  <div class="form-group">
-    <label for="surname">Surname</label>
-    <br />
-    <input id="surname" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.surname" name="surname" #surname="ngModel" type="text"
-      autocomplete="off" required />
-    <small [hidden]="surname.valid || (surname.pristine && !purchaseForm.submitted)" class="text-danger">
-                Email is required and format should be <i>john@doe.com</i>.
+      <div class="form-group">
+        <label for="companyName">Company Name</label>
+        <br />
+        <input id="companyName" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.companyName" name="companyName" #companyName="ngModel"
+          type="text" autocomplete="off" required />
+        <small [hidden]="companyName.valid || (companyName.pristine && !purchaseForm.submitted)" class="text-danger">
+                Company Name is required.
               </small>
-  </div>
+      </div>
 
-  <div class="form-group">
-    <label for="phone">Phone Number</label>
-    <br />
-    <input id="phone" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.phone" name="phone" #phone="ngModel" type="text" autocomplete="off"
-      required />
-    <small [hidden]="phone.valid || (phone.pristine && !purchaseForm.submitted)" class="text-danger">
-                Email is required and format should be <i>john@doe.com</i>.
+      <div class="form-group">
+        <label for="address">Address</label>
+        <br />
+        <input id="address" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.address" name="address" #address="ngModel" type="text"
+          autocomplete="off" required />
+        <small [hidden]="address.valid || (address.pristine && !purchaseForm.submitted)" class="text-danger">
+                Address is required.
               </small>
-  </div>
+      </div>
 
-  <div class="form-group">
-    <label for="email">Email Address</label>
-    <br />
-    <input id="email" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.Email" name="email" #email="ngModel" type="email"
-      autocomplete="off" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required />
-    <small [hidden]="email.valid || (email.pristine && !purchaseForm.submitted)" class="text-danger">
-                Email is required and format should be <i>john@doe.com</i>.
+      <div class="form-group">
+        <label for="city">City</label>
+        <br />
+        <input id="city" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.city" name="city" #city="ngModel" type="text" autocomplete="off"
+          required />
+        <small [hidden]="city.valid || (city.pristine && !purchaseForm.submitted)" class="text-danger">
+                City is required.
               </small>
-  </div>
+      </div>
 
-  <div class="form-group">
-    <label for="companyName">Company Name</label>
-    <br />
-    <input id="companyName" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.companyName" name="companyName" #companyName="ngModel"
-      type="email" autocomplete="off" required />
-    <small [hidden]="companyName.valid || (companyName.pristine && !purchaseForm.submitted)" class="text-danger">
-                Email is required and format should be <i>john@doe.com</i>.
+      <div class="form-group">
+        <label for="postCode">Post Code</label>
+        <br />
+        <input id="postCode" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.postCode" name="postCode" #postCode="ngModel" type="text"
+          autocomplete="off" required />
+        <small [hidden]="postCode.valid || (postCode.pristine && !purchaseForm.submitted)" class="text-danger">
+                Post Code is required.
               </small>
-  </div>
+      </div>
 
-  <div class="form-group">
-    <label for="address">Address</label>
-    <br />
-    <input id="address" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.address" name="address" #address="ngModel" type="email"
-      autocomplete="off" required />
-    <small [hidden]="address.valid || (address.pristine && !purchaseForm.submitted)" class="text-danger">
-                Email is required and format should be <i>john@doe.com</i>.
+      <div class="form-group">
+        <label for="country">Country</label>
+        <br />
+        <input id="country" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.country" name="country" #country="ngModel" type="text"
+          autocomplete="off" required />
+        <small [hidden]="country.valid || (country.pristine && !purchaseForm.submitted)" class="text-danger">
+                Country is required.
               </small>
-  </div>
+      </div>
 
-  <div class="form-group">
-    <label for="city">City</label>
-    <br />
-    <input id="city" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.city" name="city" #city="ngModel" type="email" autocomplete="off"
-      required />
-    <small [hidden]="city.valid || (city.pristine && !purchaseForm.submitted)" class="text-danger">
-                Email is required and format should be <i>john@doe.com</i>.
-              </small>
-  </div>
+      <div class="form-group">
+        <label for="name">Additional Data</label>
+        <br />
+        <input id="name" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.additionalData" name="additionalData" #additionalData="ngModel" type="text"/>
+      </div>
+      <a class="button" routerLink="/purchase/cart">Back</a>
 
-  <div class="form-group">
-    <label for="postCode">Post Code</label>
-    <br />
-    <input id="postCode" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.postCode" name="postCode" #postCode="ngModel" type="email"
-      autocomplete="off" required />
-    <small [hidden]="postCode.valid || (postCode.pristine && !purchaseForm.submitted)" class="text-danger">
-                Email is required and format should be <i>john@doe.com</i>.
-              </small>
-  </div>
-
-  <div class="form-group">
-    <label for="country">Country</label>
-    <br />
-    <input id="country" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.country" name="country" #country="ngModel" type="email"
-      autocomplete="off" required />
-    <small [hidden]="country.valid || (country.pristine && !purchaseForm.submitted)" class="text-danger">
-                Email is required and format should be <i>john@doe.com</i>.
-              </small>
-  </div>
-
-  <div class="form-group">
-    <label for="name">Additional Data</label>
-    <br />
-    <input id="name" (keyup)="onKeyup($event)" [(ngModel)]="purchaserData.email" name="registerEmail" #registerEmail="ngModel"
-      type="email" autocomplete="off" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required />
-    <small [hidden]="name.valid || (registerEmail.pristine && !purchaseForm.submitted)" class="text-danger">
-                Email is required and format should be <i>john@doe.com</i>.
-              </small>
-  </div>
-  <button click="step = step + 25" class="button button-block">Get Started</button>
-
-  <small>{{ registerResult }}</small>
-  <button [disabled]="!purchaseForm.form.valid" type="submit" class="button button-block">Get Started</button>
-  <small [hidden]="purchaseForm.form.valid" class="text-danger">
+      <small>{{ registerResult }}</small>
+      <button [disabled]="!purchaseForm.form.valid" type="submit" class="button button-block">Next</button>
+      <small [hidden]="purchaseForm.form.valid" class="text-danger">
                 Button disabled, check imput data
             </small>
-</form>
+    </form>
+
+  </div>
+</div>

@@ -14,13 +14,13 @@ import { ShoppingCartService } from '../../shared/shopping-cart.service';
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="row">
           <div class="col-md-4">
-            <img src="{{ product?.ProductImages[0]?.ImgUrl }}" class="img-responsive thumbnail" alt="Image not found">
+            <img src="{{ product?.imagesUrl[0] }}" class="img-responsive thumbnail" alt="Image not found">
           </div>
           <div class="col-md-8">
             <div class="page-header">
-              <h2>{{ product?.Name }}
+              <h2>{{ product?.name }}
                 <br>
-                <span class="label label-warning">Hot</span>  <small>{{ product?.Price }}$</small></h2>
+                <span class="label label-warning">Hot</span>  <small>{{ product?.price }}$</small></h2>
             </div>
 
             <h3 class="product-rating"><i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i>              <i class="fa fa-star-o"></i>
@@ -36,7 +36,7 @@ import { ShoppingCartService } from '../../shared/shopping-cart.service';
                 </div>
                 <div id="{{divIds[0]}}" class="panel-collapse collapse in" role="tabpanel" [attr.aria-labelledby]="panelHeadingIds[0]">
                   <div class="panel-body">
-                    {{ product?.Description }}
+                    {{ product?.description }}
                   </div>
                 </div>
               </div>
@@ -51,7 +51,7 @@ import { ShoppingCartService } from '../../shared/shopping-cart.service';
                 </div>
                 <div id="{{divIds[1]}}" class="panel-collapse collapse" role="tabpanel" [attr.aria-labelledby]="panelHeadingIds[1]">
                   <div class="panel-body">
-                    {{ product?.Details }}
+                    {{ product?.details }}
                   </div>
                 </div>
               </div>
